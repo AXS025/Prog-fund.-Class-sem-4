@@ -1,1 +1,75 @@
-a
+#CODE SO FAR
+#ADD TEST CASES TMRW
+from enum import Enum
+
+class TicketType(Enum):
+    EXHIBITION = 1
+    TOUR = 2
+    SPECIAL_EVENT = 3
+
+class Location(Enum):
+    PERMANENT_GALLERY = 1
+    EXHIBITION_HALL = 2
+    OUTDOOR_SPACE = 3
+
+class VisitorType(Enum):
+    GROUP = 1
+    STUDENT = 2
+    TEACHER = 3
+
+class Artwork:
+    def __init__(self, title, artist, date_of_creation, significance, location):
+        self.title = title
+        self.artist = artist
+        self.date_of_creation = date_of_creation
+        self.significance = significance
+        self.location = location
+
+class Exhibition:
+    def __init__(self, title, location):
+        self.title = title
+        self.location = location
+        self.artworks = []
+
+    def add_artwork(self, artwork):
+        self.artworks.append(artwork)
+
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+class Visitor(Person):
+    def __init__(self, name, age, visitor_type):
+        super().__init__(name, age)
+        self.visitor_type = visitor_type
+
+class Ticket:
+    def __init__(self, visitor, visitor_type):
+        self.visitor = visitor
+        self.ticket_type = self.get_ticket_type(visitor_type)
+        self.price = self.calculate_ticket_price()
+
+    def get_ticket_type(self, visitor_type):
+        if visitor_type != VisitorType.GROUP:
+            return TicketType.EXHIBITION
+        else:
+            return None
+
+    def calculate_ticket_price(self):
+        age = self.visitor.age
+        visitor_type = self.visitor.visitor_type
+
+        if age <= 18 or age >= 60 or visitor_type in [VisitorType.STUDENT, VisitorType.TEACHER]:
+            ticket_price = 0  
+        elif 18 <= age <= 60 and visitor_type != VisitorType.GROUP:
+            ticket_price = 63  
+        elif visitor_type == VisitorType.GROUP:
+            ticket_price = 63 * 0.5  
+        else:
+            ticket_price = None
+
+        if ticket_price is not None:
+            ticket_price *= 1.05  
+
+        return ticket_price
