@@ -1,4 +1,4 @@
-#CODE SO FAR
+#CODE SO FAR (WITH THE ROOM AND MUSEUM CLASSES)
 #ADD TEST CASES TMRW
 from enum import Enum
 
@@ -63,7 +63,7 @@ class Ticket:
         if age <= 18 or age >= 60 or visitor_type in [VisitorType.STUDENT, VisitorType.TEACHER]:
             ticket_price = 0  
         elif 18 <= age <= 60 and visitor_type != VisitorType.GROUP:
-            ticket_price = 63  
+            ticket_price = 63 
         elif visitor_type == VisitorType.GROUP:
             ticket_price = 63 * 0.5  
         else:
@@ -73,3 +73,13 @@ class Ticket:
             ticket_price *= 1.05  
 
         return ticket_price
+
+class Room:
+    def __init__(self, number, capacity):
+        self.number = number
+        self.capacity = capacity
+
+class Museum:
+    def __init__(self, name, rooms):
+        self.name = name
+        self.rooms = rooms
