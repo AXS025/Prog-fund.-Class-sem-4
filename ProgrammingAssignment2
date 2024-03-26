@@ -1,5 +1,5 @@
 #CODE SO FAR (WITH THE ROOM AND MUSEUM CLASSES)
-#ADD TEST CASES TMRW
+#ADD TEST CASES AND COMMENTS LATER 
 from enum import Enum
 
 class TicketType(Enum):
@@ -17,32 +17,33 @@ class VisitorType(Enum):
     STUDENT = 2
     TEACHER = 3
 
-class Artwork:
-    def __init__(self, title, artist, date_of_creation, significance, location):
-        self.title = title
-        self.artist = artist
-        self.date_of_creation = date_of_creation
-        self.significance = significance
-        self.location = location
-
-class Exhibition:
-    def __init__(self, title, location):
-        self.title = title
-        self.location = location
-        self.artworks = []
-
-    def add_artwork(self, artwork):
-        self.artworks.append(artwork)
-
 class Person:
     def __init__(self, name, age):
         self.name = name
         self.age = age
 
+    def set_name(self, name):
+        self.name = name
+
+    def get_name(self):
+        return self.name
+
+    def set_age(self, age):
+        self.age = age
+
+    def get_age(self):
+        return self.age
+
 class Visitor(Person):
     def __init__(self, name, age, visitor_type):
         super().__init__(name, age)
         self.visitor_type = visitor_type
+
+    def set_visitor_type(self, visitor_type):
+        self.visitor_type = visitor_type
+
+    def get_visitor_type(self):
+        return self.visitor_type
 
 class Ticket:
     def __init__(self, visitor, visitor_type):
@@ -61,25 +62,84 @@ class Ticket:
         visitor_type = self.visitor.visitor_type
 
         if age <= 18 or age >= 60 or visitor_type in [VisitorType.STUDENT, VisitorType.TEACHER]:
-            ticket_price = 0  
+            ticket_price = 0
         elif 18 <= age <= 60 and visitor_type != VisitorType.GROUP:
-            ticket_price = 63 
+            ticket_price = 63
         elif visitor_type == VisitorType.GROUP:
-            ticket_price = 63 * 0.5  
+            ticket_price = 63 * 0.5
         else:
             ticket_price = None
 
         if ticket_price is not None:
-            ticket_price *= 1.05  
+            ticket_price *= 1.05
 
         return ticket_price
 
+class Museum:
+    def __init__(self, museum_Name, rooms):
+        self.museum_Name = museum_Name
+        self.rooms = rooms
+
+    def set_museum_Name(self, museum_Name):
+        self.museum_Name = museum_Name
+
+    def get_museum_Name(self):
+        return self.museum_Name
+
+    def set_rooms(self, rooms):
+        self.rooms = rooms
+
+    def get_rooms(self):
+        return self.rooms
+    
 class Room:
     def __init__(self, number, capacity):
         self.number = number
         self.capacity = capacity
 
-class Museum:
-    def __init__(self, name, rooms):
-        self.name = name
-        self.rooms = rooms
+    def set_number(self, number):
+        self.number = number
+
+    def get_number(self):
+        return self.number
+
+    def set_capacity(self, capacity):
+        self.capacity = capacity
+
+    def get_capacity(self):
+        return self.capacity
+
+class Exhibition:
+    def __init__(self, title, location):
+        self.title = title
+        self.location = location
+        self.artworks = []
+
+    def set_location(self, location):
+        self.location = location
+
+    def get_location(self):
+        return self.location
+
+    def add_artwork(self, artwork):
+        self.artworks.append(artwork)
+
+class Artwork:
+    def __init__(self, title, artist, date_of_creation, significance, location):
+        self.title = title
+        self.artist = artist
+        self.date_of_creation = date_of_creation
+        self.significance = significance
+        self.location = location
+
+    def set_title(self, title):
+        self.title = title
+
+    def get_title(self):
+        return self.title
+
+    def set_artist(self, artist):
+        self.artist = artist
+
+    def get_artist(self):
+        return self.artist
