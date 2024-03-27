@@ -1,145 +1,145 @@
-#CODE SO FAR (WITH THE ROOM AND MUSEUM CLASSES)
-#ADD TEST CASES AND COMMENTS LATER 
-from enum import Enum
+#CODE SO FAR
+#ADD TEST CASES
+from enum import Enum #Imports enum
 
-class TicketType(Enum):
+class TicketType(Enum): #enumeration for types of tickets
     EXHIBITION = 1
     TOUR = 2
     SPECIAL_EVENT = 3
 
-class Location(Enum):
+class Location(Enum): #enum for the locations
     PERMANENT_GALLERY = 1
     EXHIBITION_HALL = 2
     OUTDOOR_SPACE = 3
 
-class VisitorType(Enum):
+class VisitorType(Enum): #the visitor types (to identfy who get a discount or free tickets)
     GROUP = 1
     STUDENT = 2
     TEACHER = 3
 
-class Person:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
+class Person: #person class (parent)
+    def __init__(self, name, age): #constructor initializing the Person with its attributes
+        self.name = name #name attribute
+        self.age = age #age attribute
 
-    def set_name(self, name):
+    def set_name(self, name): #setter
         self.name = name
 
-    def get_name(self):
+    def get_name(self): #getter
         return self.name
 
-    def set_age(self, age):
+    def set_age(self, age): #setter
         self.age = age
 
-    def get_age(self):
+    def get_age(self): #getter
         return self.age
 
-class Visitor(Person):
-    def __init__(self, name, age, visitor_type):
-        super().__init__(name, age)
+class Visitor(Person): #Visitor class which inherits for the parent class Person
+    def __init__(self, name, age, visitor_type): #constructor
+        super().__init__(name, age) #super function that calls attributes from the parent class
+        self.visitor_type = visitor_type #visitor type attribute
+
+    def set_visitor_type(self, visitor_type): #setter
         self.visitor_type = visitor_type
 
-    def set_visitor_type(self, visitor_type):
-        self.visitor_type = visitor_type
-
-    def get_visitor_type(self):
+    def get_visitor_type(self): #getter
         return self.visitor_type
 
-class Ticket:
+class Ticket: #Ticket class
     def __init__(self, visitor, visitor_type):
         self.visitor = visitor
         self.ticket_type = self.get_ticket_type(visitor_type)
         self.price = self.calculate_ticket_price()
 
-    def get_ticket_type(self, visitor_type):
-        if visitor_type != VisitorType.GROUP:
-            return TicketType.EXHIBITION
-        else:
+    def get_ticket_type(self, visitor_type): #method to determine ticket type based on visitor type
+        if visitor_type != VisitorType.GROUP: #If function for if the visitor is not a group
+            return TicketType.EXHIBITION #then return exhibition ticket type
+        else: #else function, it would retun none
             return None
 
-    def calculate_ticket_price(self):
-        age = self.visitor.age
-        visitor_type = self.visitor.visitor_type
+    def calculate_ticket_price(self): #To calculate the ticket price
+        age = self.visitor.age #gets the visitors age
+        visitor_type = self.visitor.visitor_type #get the visitors type
 
-        if age <= 18 or age >= 60 or visitor_type in [VisitorType.STUDENT, VisitorType.TEACHER]:
-            ticket_price = 0
-        elif 18 <= age <= 60 and visitor_type != VisitorType.GROUP:
-            ticket_price = 63
-        elif visitor_type == VisitorType.GROUP:
-            ticket_price = 63 * 0.5
+        if age <= 18 or age >= 60 or visitor_type in [VisitorType.STUDENT, VisitorType.TEACHER]: #if the visitor is under 18 or over 60, or a student/teacher
+            ticket_price = 0  #The ticket is free
+        elif 18 <= age <= 60 and visitor_type != VisitorType.GROUP: #if the visitor is between 18 and 60 and not in a group
+            ticket_price = 63 #then their ticket is 63
+        elif visitor_type == VisitorType.GROUP: #If they are in a group
+            ticket_price = 63 * 0.5 #then their ticket is 50 precent off
         else:
             ticket_price = None
 
         if ticket_price is not None:
-            ticket_price *= 1.05
+            ticket_price *= 1.05 #with the VAT tax
 
-        return ticket_price
+        return ticket_price #returns the calculated price
 
-class Museum:
-    def __init__(self, museum_Name, rooms):
+class Museum: #Museum class
+    def __init__(self, museum_Name, rooms):#Constructor
         self.museum_Name = museum_Name
-        self.rooms = rooms
+        self.rooms = rooms #composition: Museum "owns" Room objects
 
-    def set_museum_Name(self, museum_Name):
+    def set_museum_Name(self, museum_Name): #setter
         self.museum_Name = museum_Name
 
-    def get_museum_Name(self):
+    def get_museum_Name(self): #getter
         return self.museum_Name
 
-    def set_rooms(self, rooms):
+    def set_rooms(self, rooms): #setter
         self.rooms = rooms
 
-    def get_rooms(self):
+    def get_rooms(self): #getter
         return self.rooms
-    
-class Room:
+
+class Room: #Room class
     def __init__(self, number, capacity):
-        self.number = number
+        self.number = number #attribute
         self.capacity = capacity
 
-    def set_number(self, number):
+    def set_number(self, number): #setter
         self.number = number
 
-    def get_number(self):
+    def get_number(self): #getter
         return self.number
 
-    def set_capacity(self, capacity):
+    def set_capacity(self, capacity): #setter
         self.capacity = capacity
 
-    def get_capacity(self):
+    def get_capacity(self): #getter
         return self.capacity
 
-class Exhibition:
-    def __init__(self, title, location):
+class Exhibition: #Exhibition class
+    def __init__(self, title, location): #Constructor
         self.title = title
         self.location = location
-        self.artworks = []
+        self.artworks = [] #initializing an empty list to store artworks
 
-    def set_location(self, location):
+    def set_location(self, location): #setter
         self.location = location
 
-    def get_location(self):
+    def get_location(self): #getter
         return self.location
 
-    def add_artwork(self, artwork):
-        self.artworks.append(artwork)
+    def add_artwork(self, artwork): #adds artwork to the exhibition's collection
+        self.artworks.append(artwork) #appends the artwork to the list of artworks with this Exhibition
 
-class Artwork:
-    def __init__(self, title, artist, date_of_creation, significance, location):
+class Artwork: #Artwork class
+    def __init__(self, title, artist, date_of_creation, significance, location): #Constructor
         self.title = title
         self.artist = artist
         self.date_of_creation = date_of_creation
         self.significance = significance
         self.location = location
 
-    def set_title(self, title):
+    def set_title(self, title): #setter
         self.title = title
 
-    def get_title(self):
+    def get_title(self): #getter
         return self.title
 
-    def set_artist(self, artist):
+    def set_artist(self, artist): #setter
         self.artist = artist
 
-    def get_artist(self):
+    def get_artist(self): #getter
         return self.artist
