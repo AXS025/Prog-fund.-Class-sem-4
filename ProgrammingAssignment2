@@ -77,7 +77,7 @@ class Ticket: #Ticket class
 class Museum: #Museum class
     def __init__(self, museum_Name, rooms):#Constructor
         self.museum_Name = museum_Name
-        self.rooms = rooms #composition: Museum "owns" Room objects
+        self.rooms = [] #composition: Museum "owns" Room objects
 
     def set_museum_Name(self, museum_Name): #setter
         self.museum_Name = museum_Name
@@ -143,45 +143,45 @@ class Artwork: #Artwork class
     def get_artist(self): #getter
         return self.artist
 
-# Creating Visitors
+#Creates Visitors
 visitor1 = Visitor("Afra", 19, None)
 visitor2 = Visitor("Khalifa", 16, None)
 visitor3 = Visitor("Mozzah", 25, VisitorType.STUDENT)
 visitor4 = Visitor("Mohammed", 40, VisitorType.GROUP)
 
-# Creating Tickets
+#Creates Tickets
 ticket1 = Ticket(visitor1, visitor1.visitor_type)
 ticket2 = Ticket(visitor2, visitor2.visitor_type)
 ticket3 = Ticket(visitor3, visitor3.visitor_type)
 ticket4 = Ticket(visitor4, visitor4.visitor_type)
 
-# Displaying ticket prices for visitors with their age
+#Displays ticket prices for visitors with their age
 print(f"{visitor1.name} (Age {visitor1.age}): Ticket Price: {ticket1.price:.2f} AED")
 print(f"{visitor2.name} (Age {visitor2.age}): Ticket Price: {ticket2.price:.2f} AED")
 print(f"{visitor3.name} (Age {visitor3.age}): Ticket Price: {ticket3.price:.2f} AED")
 print(f"{visitor4.name} (Age {visitor4.age}): Ticket Price: {ticket4.price:.2f} AED")
 
 
-# Creating the Museum and Rooms
+#Creates the Museum and Rooms
 museum = Museum("The Louvre Museum", [Room(1, 100), Room(2, 300), Room(3, 200)])
 
-# Displaying museum name and rooms
+#Displays museum name and rooms
 print(f"Museum Name: {museum.get_museum_Name()}")
 print("Rooms:")
 for room in museum.get_rooms():
     print(f"Room {room.get_number()}: Capacity - {room.get_capacity()}")
 
-# Creating an Exhibition
+#Creates an Exhibition
 exhibition1 = Exhibition("Famous Art", Location.EXHIBITION_HALL)
 
-# Adding Artworks to the Exhibition
+#Adds Artworks to the Exhibition
 artwork1 = Artwork("The Starry Night", "Vincent van Gogh", "1889", "Impressionism", exhibition1.get_location())
 artwork2 = Artwork("Mona Lisa", "Leonardo da Vinci", "1503", "Renaissance", exhibition1.get_location())
 
 exhibition1.add_artwork(artwork1)
 exhibition1.add_artwork(artwork2)
 
-# Displaying Exhibition Details
+#Displays Exhibition Details
 print(f"\nExhibition Title: {exhibition1.title}")
 print(f"Location: {exhibition1.get_location().name}")
 print("Artworks in the Exhibition:")
@@ -206,16 +206,16 @@ for artwork in exhibition2.artworks:
 
 
 #Creates visitors with different types
-visitor7 = Visitor("Ahmed", 32, VisitorType.STUDENT)
-visitor8 = Visitor("Mera", 22, VisitorType.TEACHER)
-visitor9 = Visitor("Thuraia", 25, VisitorType.GROUP)
+visitor5 = Visitor("Ahmed", 32, VisitorType.STUDENT)
+visitor6 = Visitor("Mera", 22, VisitorType.TEACHER)
+visitor7 = Visitor("Thuraia", 25, VisitorType.GROUP)
 
 #Creates tickets for each visitor
+ticket5 = Ticket(visitor5, visitor5.visitor_type)
+ticket6 = Ticket(visitor6, visitor6.visitor_type)
 ticket7 = Ticket(visitor7, visitor7.visitor_type)
-ticket8 = Ticket(visitor8, visitor8.visitor_type)
-ticket9 = Ticket(visitor9, visitor9.visitor_type)
 
 #Shows the people with their ticket type
+print(f"{visitor5.name}'s Ticket Type: {ticket5.ticket_type.name}")
+print(f"{visitor6.name}'s Ticket Type: {ticket6.ticket_type.name}")
 print(f"{visitor7.name}'s Ticket Type: {ticket7.ticket_type.name}")
-print(f"{visitor8.name}'s Ticket Type: {ticket8.ticket_type.name}")
-print(f"{visitor9.name}'s Ticket Type: {ticket9.ticket_type.name}")
