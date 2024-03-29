@@ -77,7 +77,7 @@ class Ticket: #Ticket class
 class Museum: #Museum class
     def __init__(self, museum_Name, rooms):#Constructor
         self.museum_Name = museum_Name
-        self.rooms = [] #composition: Museum "owns" Room objects
+        self.rooms = rooms #composition: Museum "owns" Room objects
 
     def set_museum_Name(self, museum_Name): #setter
         self.museum_Name = museum_Name
