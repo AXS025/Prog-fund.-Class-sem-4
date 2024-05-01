@@ -1,0 +1,63 @@
+class Person:
+    def __init__(self, name, age, date_of_birth, address, contact_details):
+        self.name = name
+        self.age = age
+        self.date_of_birth = date_of_birth
+        self.address = address
+        self.contact_details = contact_details
+
+class Employee(Person):
+    def __init__(self, name, employee_id, department, job_title, basic_salary, age, date_of_birth):
+        super().__init__(name, age, date_of_birth, None, None) 
+        self.employee_id = employee_id
+        self.department = department
+        self.job_title = job_title
+        self.basic_salary = basic_salary
+
+class Guest(Person):
+    def __init__(self, name, age, date_of_birth, address, contact_details, guest_id):
+        super().__init__(name, age, date_of_birth, address, contact_details)
+        self.guest_id = guest_id
+
+class Client(Person):
+    def __init__(self, name, age, date_of_birth, address, contact_details, client_id, budget):
+        super().__init__(name, age, date_of_birth, address, contact_details)
+        self.client_id = client_id
+        self.budget = budget
+
+class Event:
+    def __init__(self, event_id, event_type, theme, date, time, duration, venues, client):
+        self.event_id = event_id
+        self.event_type = event_type
+        self.theme = theme
+        self.date = date
+        self.time = time
+        self.duration = duration
+        self.venues = venues 
+        self.client = client
+
+class Venue:
+    def __init__(self, venue_id, name, address, contact, min_guests, max_guests):
+        self.venue_id = venue_id
+        self.name = name
+        self.address = address
+        self.contact = contact
+        self.min_guests = min_guests
+        self.max_guests = max_guests
+
+class Supplier:
+    def __init__(self, supplier_id, name, address, contact_details):
+        self.supplier_id = supplier_id
+        self.name = name
+        self.address = address
+        self.contact_details = contact_details
+        self.services = []  
+
+    def add_service(self, service):
+        self.services.append(service)
+
+class Service:
+    def __init__(self, service_id, name, description):
+        self.service_id = service_id
+        self.name = name
+        self.description = description
