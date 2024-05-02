@@ -137,3 +137,132 @@ class Event:
 
     def display(self):
         return f"Event ID: {self.event_id}\nType: {self.event_type}\nTheme: {self.theme}\nDate: {self.date}\nTime: {self.time}\nDuration: {self.duration}\nVenue: {self.venue_address}\nClient ID: {self.client_id}\nGuest List: {self.guest_list}\nCatering: {self.catering_company}\nCleaning: {self.cleaning_company}\nDecorations: {self.decorations_company}\nEntertainment: {self.entertainment_company}\nFurniture: {self.furniture_supply_company}\nInvoice: {self.invoice}\n"
+
+class Company:
+    def __init__(self):
+        self.employees = {}
+        self.events = {}
+        self.clients = {}
+        self.suppliers = {}
+        self.guests = {}
+        self.venues = {}
+
+    def add_employee(self, employee):
+        self.employees[employee.employee_id] = employee
+
+    def delete_employee(self, employee_id):
+        if employee_id in self.employees:
+            del self.employees[employee_id]
+
+    def modify_employee(self, employee_id, new_employee):
+        if employee_id in self.employees:
+            self.employees[employee_id] = new_employee
+
+    def display_all_employees(self):
+        return [employee.display() for employee in self.employees.values()]
+
+    def display_employee_by_id(self, employee_id):
+        if employee_id in self.employees:
+            return self.employees[employee_id].display()
+        else:
+            return "Employee not found."
+
+    def add_client(self, client):
+        self.clients[client.client_id] = client
+
+    def delete_client(self, client_id):
+        if client_id in self.clients:
+            del self.clients[client_id]
+
+    def modify_client(self, client_id, new_client):
+        if client_id in self.clients:
+            self.clients[client_id] = new_client
+
+    def display_all_clients(self):
+        return [client.display() for client in self.clients.values()]
+
+    def display_client_by_id(self, client_id):
+        if client_id in self.clients:
+            return self.clients[client_id].display()
+        else:
+            return "Client not found."
+
+    def add_guest(self, guest):
+        self.guests[guest.guest_id] = guest
+
+    def delete_guest(self, guest_id):
+        if guest_id in self.guests:
+            del self.guests[guest_id]
+
+    def modify_guest(self, guest_id, new_guest):
+        if guest_id in self.guests:
+            self.guests[guest_id] = new_guest
+
+    def display_all_guests(self):
+        return [guest.display() for guest in self.guests.values()]
+
+    def display_guest_by_id(self, guest_id):
+        if guest_id in self.guests:
+            return self.guests[guest_id].display()
+        else:
+            return "Guest not found."
+
+    def add_supplier(self, supplier):
+        self.suppliers[supplier.id] = supplier
+
+    def delete_supplier(self, supplier_id):
+        if supplier_id in self.suppliers:
+            del self.suppliers[supplier_id]
+
+    def modify_supplier(self, supplier_id, new_supplier):
+        if supplier_id in self.suppliers:
+            self.suppliers[supplier_id] = new_supplier
+
+    def display_all_suppliers(self):
+        return [supplier.display() for supplier in self.suppliers.values()]
+
+    def display_supplier_by_id(self, supplier_id):
+        if supplier_id in self.suppliers:
+            return self.suppliers[supplier_id].display()
+        else:
+            return "Supplier not found."
+
+    def add_venue(self, venue):
+        self.venues[venue.venue_id] = venue
+
+    def delete_venue(self, venue_id):
+        if venue_id in self.venues:
+            del self.venues[venue_id]
+
+    def modify_venue(self, venue_id, new_venue):
+        if venue_id in self.venues:
+            self.venues[venue_id] = new_venue
+
+    def display_all_venues(self):
+        return [venue.display() for venue in self.venues.values()]
+
+    def display_venue_by_id(self, venue_id):
+        if venue_id in self.venues:
+            return self.venues[venue_id].display()
+        else:
+            return "Venue not found."
+
+    def add_event(self, event):
+        self.events[event.event_id] = event
+
+    def delete_event(self, event_id):
+        if event_id in self.events:
+            del self.events[event_id]
+
+    def modify_event(self, event_id, new_event):
+        if event_id in self.events:
+            self.events[event_id] = new_event
+
+    def display_all_events(self):
+        return [event.display() for event in self.events.values()]
+
+    def display_event_by_id(self, event_id):
+        if event_id in self.events:
+            return self.events[event_id].display()
+        else:
+            return "Event not found."
