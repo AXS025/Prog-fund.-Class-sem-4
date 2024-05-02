@@ -1,3 +1,7 @@
+import pickle
+from tkinter import *
+from tkinter import messagebox, Tk, Label, Entry, Button
+
 class Person:
     def __init__(self, name, age, date_of_birth):
         self.name = name
@@ -266,3 +270,105 @@ class Company:
             return self.events[event_id].display()
         else:
             return "Event not found."
+
+
+class EventManagementGUI:
+    def __init__(self, master, company):
+        self.master = master
+        self.company = company
+        self.master.title("Event Management System")
+        self.master.geometry("800x400")  # Sets the size of the window
+
+        #display
+        self.padding_frame_top = Frame(self.master, height=30)
+        self.padding_frame_top.pack()
+
+        self.employee_frame = Frame(self.master)
+        self.employee_frame.pack(pady=10)
+        self.add_employee_button = Button(self.employee_frame, text="Add Employee", command=self.add_employee)
+        self.add_employee_button.pack(side=LEFT, padx=10)
+        self.delete_employee_button = Button(self.employee_frame, text="Delete Employee", command=self.delete_employee)
+        self.delete_employee_button.pack(side=LEFT, padx=10)
+        self.modify_employee_button = Button(self.employee_frame, text="Modify Employee", command=self.modify_employee)
+        self.modify_employee_button.pack(side=LEFT, padx=10)
+        self.display_all_employees_button = Button(self.employee_frame, text="Display All Employees",
+                                                   command=self.display_all_employees)
+        self.display_all_employees_button.pack(side=LEFT, padx=10)
+        self.display_employee_by_id_button = Button(self.employee_frame, text="Display Employee by ID",
+                                                    command=self.display_employee_by_id)
+        self.display_employee_by_id_button.pack(side=LEFT, padx=10)
+
+        self.client_frame = Frame(self.master)
+        self.client_frame.pack(pady=10)
+        self.add_client_button = Button(self.client_frame, text="Add Client", command=self.add_client)
+        self.add_client_button.pack(side=LEFT, padx=10)
+        self.delete_client_button = Button(self.client_frame, text="Delete Client", command=self.delete_client)
+        self.delete_client_button.pack(side=LEFT, padx=10)
+        self.modify_client_button = Button(self.client_frame, text="Modify Client", command=self.modify_client)
+        self.modify_client_button.pack(side=LEFT, padx=10)
+        self.display_all_clients_button = Button(self.client_frame, text="Display All Clients",
+                                                 command=self.display_all_clients)
+        self.display_all_clients_button.pack(side=LEFT, padx=10)
+        self.display_client_by_id_button = Button(self.client_frame, text="Display Client by ID",
+                                                  command=self.display_client_by_id)
+        self.display_client_by_id_button.pack(side=LEFT, padx=10)
+
+        self.guest_frame = Frame(self.master)
+        self.guest_frame.pack(pady=10)
+        self.add_guest_button = Button(self.guest_frame, text="Add Guest", command=self.add_guest)
+        self.add_guest_button.pack(side=LEFT, padx=10)
+        self.delete_guest_button = Button(self.guest_frame, text="Delete Guest", command=self.delete_guest)
+        self.delete_guest_button.pack(side=LEFT, padx=10)
+        self.modify_guest_button = Button(self.guest_frame, text="Modify Guest", command=self.modify_guest)
+        self.modify_guest_button.pack(side=LEFT, padx=10)
+        self.display_all_guests_button = Button(self.guest_frame, text="Display All Guests",
+                                                command=self.display_all_guests)
+        self.display_all_guests_button.pack(side=LEFT, padx=10)
+        self.display_guest_by_id_button = Button(self.guest_frame, text="Display Guest by ID",
+                                                 command=self.display_guest_by_id)
+        self.display_guest_by_id_button.pack(side=LEFT, padx=10)
+
+        self.venue_frame = Frame(self.master)
+        self.venue_frame.pack(pady=10)
+        self.add_venue_button = Button(self.venue_frame, text="Add Venue", command=self.add_venue)
+        self.add_venue_button.pack(side=LEFT, padx=10)
+        self.delete_venue_button = Button(self.venue_frame, text="Delete Venue", command=self.delete_venue)
+        self.delete_venue_button.pack(side=LEFT, padx=10)
+        self.modify_venue_button = Button(self.venue_frame, text="Modify Venue", command=self.modify_venue)
+        self.modify_venue_button.pack(side=LEFT, padx=10)
+        self.display_all_venues_button = Button(self.venue_frame, text="Display All Venues",
+                                                command=self.display_all_venues)
+        self.display_all_venues_button.pack(side=LEFT, padx=10)
+        self.display_venue_by_id_button = Button(self.venue_frame, text="Display Venue by ID",
+                                                 command=self.display_venue_by_id)
+        self.display_venue_by_id_button.pack(side=LEFT, padx=10)
+
+        self.supplier_frame = Frame(self.master)
+        self.supplier_frame.pack(pady=10)
+        self.add_supplier_button = Button(self.supplier_frame, text="Add Supplier", command=self.add_supplier)
+        self.add_supplier_button.pack(side=LEFT, padx=10)
+        self.delete_supplier_button = Button(self.supplier_frame, text="Delete Supplier", command=self.delete_supplier)
+        self.delete_supplier_button.pack(side=LEFT, padx=10)
+        self.modify_supplier_button = Button(self.supplier_frame, text="Modify Supplier", command=self.modify_supplier)
+        self.modify_supplier_button.pack(side=LEFT, padx=10)
+        self.display_all_suppliers_button = Button(self.supplier_frame, text="Display All Suppliers",
+                                                   command=self.display_all_suppliers)
+        self.display_all_suppliers_button.pack(side=LEFT, padx=10)
+        self.display_supplier_by_id_button = Button(self.supplier_frame, text="Display Supplier by ID",
+                                                    command=self.display_supplier_by_id)
+        self.display_supplier_by_id_button.pack(side=LEFT, padx=10)
+
+        self.event_frame = Frame(self.master)
+        self.event_frame.pack(pady=10)
+        self.add_event_button = Button(self.event_frame, text="Add Event", command=self.add_event)
+        self.add_event_button.pack(side=LEFT, padx=10)
+        self.delete_event_button = Button(self.event_frame, text="Delete Event", command=self.delete_event)
+        self.delete_event_button.pack(side=LEFT, padx=10)
+        self.modify_event_button = Button(self.event_frame, text="Modify Event", command=self.modify_event)
+        self.modify_event_button.pack(side=LEFT, padx=10)
+        self.display_all_events_button = Button(self.event_frame, text="Display All Events",
+                                                command=self.display_all_events)
+        self.display_all_events_button.pack(side=LEFT, padx=10)
+        self.display_event_by_id_button = Button(self.event_frame, text="Display Event by ID",
+                                                 command=self.display_event_by_id)
+        self.display_event_by_id_button.pack(side=LEFT, padx=10)
