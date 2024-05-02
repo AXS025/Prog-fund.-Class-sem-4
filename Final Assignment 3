@@ -729,3 +729,122 @@ class EventManagementGUI:
             messagebox.showinfo("Guest Details", guest.display())
         else:
             messagebox.showerror("Error", f"Guest with ID {guest_id} not found.")
+
+    #Venue
+    def add_venue(self):
+        self.add_venue_window = Tk()
+        self.add_venue_window.title("Add Venue")
+        self.add_venue_window.geometry("400x400")
+
+        labels = ['Venue ID:', 'Venue Name:', 'Address:', 'Contact:', 'Min Guests:', 'Max Guests:']
+        entries = []
+        for i, label_text in enumerate(labels):
+            label = Label(self.add_venue_window, text=label_text)
+            label.grid(row=i, column=0, pady=5, padx=(70, 0))
+            entry = Entry(self.add_venue_window)
+            entry.grid(row=i, column=1, pady=5)
+            entries.append(entry)
+
+        add_button = Button(self.add_venue_window, text="Add Venue", command=lambda: self.add_venue_to_company(entries))
+        add_button.grid(row=len(labels), columnspan=2, pady=10, padx=(20, 0))
+
+    def add_venue_to_company(self, entries):
+        venue_id = entries[0].get()
+        venue_name = entries[1].get()
+        address = entries[2].get()
+        contact = entries[3].get()
+        minimum_guests = entries[4].get()
+        maximum_guests = entries[5].get()
+
+        new_venue = Venue(venue_id, venue_name, address, contact, minimum_guests, maximum_guests)
+        self.company.add_venue(new_venue)
+        self.add_venue_window.destroy()
+
+    def delete_venue(self):
+        self.delete_venue_window = Tk()
+        self.delete_venue_window.title("Delete Venue")
+        self.delete_venue_window.geometry("300x100")
+        label = Label(self.delete_venue_window, text="Enter Venue ID to delete:")
+        label.pack()
+        entry = Entry(self.delete_venue_window)
+        entry.pack()
+        delete_button = Button(self.delete_venue_window, text="Delete",
+                               command=lambda: self.delete_venue_from_company(entry.get()))
+        delete_button.pack()
+
+    def delete_venue_from_company(self, venue_id):
+        self.company.delete_venue(venue_id)
+        self.delete_venue_window.destroy()
+
+    def modify_venue(self):
+        self.modify_venue_window = Tk()
+        self.modify_venue_window.title("Modify Venue")
+        self.modify_venue_window.geometry("400x400")
+
+        labels = ['Venue ID:', 'Venue Name:', 'Address:', 'Contact:', 'Min Guests:', 'Max Guests:']
+        entries = []
+        for i, label_text in enumerate(labels):
+            label = Label(self.modify_venue_window, text=label_text)
+            label.grid(row=i, column=0, pady=5, padx=(70, 0))
+            entry = Entry(self.modify_venue_window)
+            entry.grid(row=i, column=1, pady=5)
+            entries.append(entry)
+
+        modify_button = Button(self.modify_venue_window, text="Modify Venue",
+                               command=lambda: self.modify_venue_in_company(entries))
+        modify_button.grid(row=len(labels), columnspan=2, pady=10, padx=(20, 0))
+
+    def modify_venue_in_company(self, entries):
+        venue_id = entries[0].get()
+        new_venue_name = entries[1].get()
+        new_address = entries[2].get()
+        new_contact = entries[3].get()
+        new_minimum_guests = entries[4].get()
+        new_maximum_guests = entries[5].get()
+
+        if venue_id in self.company.venues:
+            venue = self.company.venues[venue_id]
+            if venue_id:
+                venue.venue_id = venue_id
+            if new_venue_name:
+                venue.name = new_venue_name
+            if new_address:
+                venue.address = new_address
+            if new_contact:
+                venue.contact = new_contact
+            if new_minimum_guests:
+                venue.minimum_number_of_guests = new_minimum_guests
+            if new_maximum_guests:
+                venue.maximum_number_of_guests = new_maximum_guests
+
+            self.company.venues[venue_id] = venue
+            messagebox.showinfo("Venue Modified", f"Venue with ID {venue_id} modified successfully.")
+            self.modify_venue_window.destroy()
+        else:
+            messagebox.showerror("Error", f"Venue with ID {venue_id} not found.")
+
+    def display_all_venues(self):
+        messagebox.showinfo("All Venues", "\n".join(self.company.display_all_venues()))
+
+    def display_venue_by_id(self):
+        self.display_venue_by_id_window = Tk()
+        self.display_venue_by_id_window.title("Display Venue by ID")
+        self.display_venue_by_id_window.geometry("400x400")
+
+        label = Label(self.display_venue_by_id_window, text="Enter Venue ID:")
+        label.pack(pady=10)
+        entry = Entry(self.display_venue_by_id_window)
+        entry.pack(pady=5)
+
+        display_button = Button(self.display_venue_by_id_window, text="Display Venue",
+                                command=lambda: self.display_venue_by_id_from_company(entry.get()))
+        display_button.pack(pady=10)
+        self.displayed_venue_label = Label(self.display_venue_by_id_window, text="")
+        self.displayed_venue_label.pack(pady=10)
+
+    def display_venue_by_id_from_company(self, venue_id):
+        if venue_id in self.company.venues:
+            venue = self.company.venues[venue_id]
+            messagebox.showinfo("Venue Details", venue.display())
+        else:
+            messagebox.showerror("Error", f"Venue with ID {venue_id} not found.")
