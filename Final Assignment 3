@@ -1133,3 +1133,41 @@ class EventManagementGUI:
             messagebox.showinfo("Supplier Details", supplier.display())
         else:
             messagebox.showerror("Error", f"Supplier with ID {supplier_id} not found.")
+
+    #Pickle section
+    def save_data(self):
+        with open("employees.pkl", "wb") as file:
+            pickle.dump(self.company.employees, file)
+        with open("clients.pkl", "wb") as file:
+            pickle.dump(self.company.clients, file)
+        with open("guests.pkl", "wb") as file:
+            pickle.dump(self.company.guests, file)
+        with open("venues.pkl", "wb") as file:
+            pickle.dump(self.company.venues, file)
+        with open("suppliers.pkl", "wb") as file:
+            pickle.dump(self.company.suppliers, file)
+        with open("events.pkl", "wb") as file:
+            pickle.dump(self.company.events, file)
+
+    def load_data(self):
+        with open("employees.pkl", "rb") as file:
+            self.company.employees = pickle.load(file)
+        with open("clients.pkl", "rb") as file:
+            self.company.clients = pickle.load(file)
+        with open("guests.pkl", "rb") as file:
+            self.company.guests = pickle.load(file)
+        with open("venues.pkl", "rb") as file:
+            self.company.venues = pickle.load(file)
+        with open("suppliers.pkl", "rb") as file:
+            self.company.suppliers = pickle.load(file)
+        with open("events.pkl", "rb") as file:
+            self.company.events = pickle.load(file)
+
+
+#main
+company = Company()
+root = Tk()
+app = EventManagementGUI(root, company)
+app.save_data()
+app.load_data()
+root.mainloop()
