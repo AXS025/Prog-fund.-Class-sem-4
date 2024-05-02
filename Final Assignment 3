@@ -372,3 +372,135 @@ class EventManagementGUI:
         self.display_event_by_id_button = Button(self.event_frame, text="Display Event by ID",
                                                  command=self.display_event_by_id)
         self.display_event_by_id_button.pack(side=LEFT, padx=10)
+
+    #employees
+    def add_employee(self):
+        # new window for adding an employee
+        self.add_employee_window = Tk()
+        self.add_employee_window.title("Add Employee")
+        self.add_employee_window.geometry("400x400")
+
+        labels = ['Name:', 'Employee ID:', 'Department:', 'Job Title:', 'Basic Salary:', 'Age:', 'Date of Birth:',
+                  'Passport Details:']
+        entries = []
+        for i, label_text in enumerate(labels):
+            label = Label(self.add_employee_window, text=label_text)
+            label.grid(row=i, column=0, pady=5, padx=(70, 0))
+            entry = Entry(self.add_employee_window)
+            entry.grid(row=i, column=1, pady=5)
+            entries.append(entry)
+
+        add_button = Button(self.add_employee_window, text="Add Employee",
+                            command=lambda: self.add_employee_to_company(entries))
+        add_button.grid(row=len(labels), columnspan=2, pady=10, padx=(20, 0))
+
+    def add_employee_to_company(self, entries):
+        name = entries[0].get()
+        employee_id = entries[1].get()
+        department = entries[2].get()
+        job_title = entries[3].get()
+        basic_salary = entries[4].get()
+        age = entries[5].get()
+        date_of_birth = entries[6].get()
+        passport_details = entries[7].get()
+
+        new_employee = Employee(name, employee_id, department, job_title, basic_salary, age, date_of_birth,
+                                passport_details)
+        self.company.add_employee(new_employee)
+        self.add_employee_window.destroy()
+
+    def delete_employee(self):
+        self.delete_employee_window = Tk()
+        self.delete_employee_window.title("Delete Employee")
+        self.delete_employee_window.geometry("300x100")
+        label = Label(self.delete_employee_window, text="Enter Employee ID to delete:")
+        label.pack()
+        entry = Entry(self.delete_employee_window)
+        entry.pack()
+        delete_button = Button(self.delete_employee_window, text="Delete",
+                               command=lambda: self.delete_employee_from_company(entry.get()))
+        delete_button.pack()
+
+    def delete_employee_from_company(self, employee_id):
+        self.company.delete_employee(employee_id)
+        self.delete_employee_window.destroy()
+
+    def modify_employee(self):
+        self.modify_employee_window = Tk()
+        self.modify_employee_window.title("Modify Employee")
+        self.modify_employee_window.geometry("400x400")
+
+        labels = ['Employee ID:', 'New Name:', 'New Department:', 'New Job Title:', 'New Basic Salary:', 'New Age:',
+                  'New Date of Birth:', 'New Passport Details:']
+        entries = []
+        for i, label_text in enumerate(labels):
+            label = Label(self.modify_employee_window, text=label_text)
+            label.grid(row=i, column=0, pady=5, padx=(70, 0))
+            entry = Entry(self.modify_employee_window)
+            entry.grid(row=i, column=1, pady=5)
+            entries.append(entry)
+
+        modify_button = Button(self.modify_employee_window, text="Modify Employee",
+                               command=lambda: self.modify_employee_in_company(entries))
+        modify_button.grid(row=len(labels), columnspan=2, pady=10, padx=(20, 0))
+
+    def modify_employee_in_company(self, entries):
+        employee_id = entries[0].get()
+        new_name = entries[1].get()
+        new_department = entries[2].get()
+        new_job_title = entries[3].get()
+        new_basic_salary = entries[4].get()
+        new_age = entries[5].get()
+        new_date_of_birth = entries[6].get()
+        new_passport_details = entries[7].get()
+
+        if employee_id in self.company.employees:
+            employee = self.company.employees[employee_id]
+            if new_name:
+                employee.name = new_name
+            if new_department:
+                employee.department = new_department
+            if new_job_title:
+                employee.job_title = new_job_title
+            if new_basic_salary:
+                employee.basic_salary = new_basic_salary
+            if new_age:
+                employee.age = new_age
+            if new_date_of_birth:
+                employee.date_of_birth = new_date_of_birth
+            if new_passport_details:
+                employee.passport_details = new_passport_details
+
+            # update the employee in the company's dictionary
+            self.company.employees[employee_id] = employee
+            messagebox.showinfo("Employee Modified", f"Employee with ID {employee_id} modified successfully.")
+            self.modify_employee_window.destroy()
+        else:
+            messagebox.showerror("Error", f"Employee with ID {employee_id} not found.")
+
+    def display_all_employees(self):
+        messagebox.showinfo("All Employees", "\n".join(self.company.display_all_employees()))
+
+    def display_employee_by_id(self):
+        self.display_employee_by_id_window = Tk()
+        self.display_employee_by_id_window.title("Display Employee by ID")
+        self.display_employee_by_id_window.geometry("400x400")
+
+        label = Label(self.display_employee_by_id_window, text="Enter Employee ID:")
+        label.pack(pady=10)
+        entry = Entry(self.display_employee_by_id_window)
+        entry.pack(pady=5)
+
+        display_button = Button(self.display_employee_by_id_window, text="Display Employee",
+                                command=lambda: self.display_employee_by_id_from_company(entry.get()))
+        display_button.pack(pady=10)
+        self.displayed_employee_label = Label(self.display_employee_by_id_window, text="")
+        self.displayed_employee_label.pack(pady=10)
+
+    def display_employee_by_id_from_company(self, employee_id):
+        if employee_id in self.company.employees:
+            employee = self.company.employees[employee_id]
+            messagebox.showinfo("Employee Details", employee.display())
+        else:
+            messagebox.showerror("Error", f"Employee with ID {employee_id} not found.")
+
