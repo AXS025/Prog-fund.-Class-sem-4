@@ -4,6 +4,12 @@ class Person:
         self.age = age
         self.date_of_birth = date_of_birth
 
+    def set_name(self, name):
+        self.name = name
+
+    def get_name(self):
+        return self.name
+
     def display(self):
         return f"Name: {self.name}\nAge: {self.age}\nDate of Birth: {self.date_of_birth}\n"
 
@@ -16,6 +22,12 @@ class Employee(Person):
         self.basic_salary = basic_salary
         self.passport_details = passport_details
 
+    def set_employee_id(self, employee_id):
+        self.employee_id = employee_id
+
+    def get_employee_id(self):
+        return self.employee_id
+
     def display(self):
         return f"Employee ID: {self.employee_id}\nDepartment: {self.department}\nJob Title: {self.job_title}\nSalary: {self.basic_salary}\n" + super().display()
 
@@ -27,7 +39,11 @@ class Client:
         self.contact_details = contact_details
         self.budget = budget
 
-    def get_id(self):
+
+    def set_client_id(self, client_id):
+        self.client_id = client_id
+
+    def get_client_id(self):
         return self.client_id
 
     def display(self):
@@ -41,7 +57,11 @@ class Guest:
         self.address = address
         self.contact_details = contact_details
 
-    def get_id(self):
+
+    def set_guest_id(self, guest_id):
+        self.guest_id = guest_id
+
+    def get_guest_id(self):
         return self.guest_id
 
     def display(self):
@@ -55,6 +75,9 @@ class Venue:
         self.contact = contact
         self.minimum_number_of_guests = minimum_number_of_guests
         self.maximum_number_of_guests = maximum_number_of_guests
+
+    def set_address(self, address):
+        self.address = address
 
     def get_address(self):
         return self.address
@@ -73,6 +96,10 @@ class Supplier:
         self.service_menu = service_menu
         self.minimum_number_of_guests = minimum_number_of_guests
         self.maximum_number_of_guests = maximum_number_of_guests
+
+
+    def set_id(self, id):
+        self.id = id
 
     def get_id(self):
         return self.id
@@ -100,6 +127,13 @@ class Event:
         self.entertainment_company = entertainment_company
         self.furniture_supply_company = furniture_supply_company
         self.invoice = invoice
+
+
+    def set_theme(self, theme):
+        self.theme = theme
+
+    def get_theme(self):
+        return self.theme
 
     def display(self):
         return f"Event ID: {self.event_id}\nType: {self.event_type}\nTheme: {self.theme}\nDate: {self.date}\nTime: {self.time}\nDuration: {self.duration}\nVenue: {self.venue_address}\nClient ID: {self.client_id}\nGuest List: {self.guest_list}\nCatering: {self.catering_company}\nCleaning: {self.cleaning_company}\nDecorations: {self.decorations_company}\nEntertainment: {self.entertainment_company}\nFurniture: {self.furniture_supply_company}\nInvoice: {self.invoice}\n"
