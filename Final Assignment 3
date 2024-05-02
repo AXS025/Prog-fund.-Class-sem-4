@@ -113,7 +113,7 @@ class Supplier:
 
 
 class Event:
-    def __init__(self, event_id, event_type, theme, date, time, duration, venue_address, client_id, guest_list,
+    def __init__(self, event_id, event_type, theme, date, time, duration, venue, client_id, guest_list,
                  catering_company,
                  cleaning_company, decorations_company, entertainment_company, furniture_supply_company, invoice):
         self.event_id = event_id
@@ -122,7 +122,7 @@ class Event:
         self.date = date
         self.time = time
         self.duration = duration
-        self.venue_address = venue_address
+        self.venue_address = venue #####
         self.client_id = client_id
         self.guest_list = guest_list if guest_list is not None else []  # IDs of guests
         self.catering_company = catering_company
@@ -504,3 +504,228 @@ class EventManagementGUI:
         else:
             messagebox.showerror("Error", f"Employee with ID {employee_id} not found.")
 
+    #client
+    def add_client(self):
+        self.add_client_window = Tk()
+        self.add_client_window.title("Add Client")
+        self.add_client_window.geometry("400x400")
+
+        labels = ['Client ID:', 'Name', 'Address:', 'Contact Details:', 'Budget:']
+        entries = []
+        for i, label_text in enumerate(labels):
+            label = Label(self.add_client_window, text=label_text)
+            label.grid(row=i, column=0, pady=5, padx=(70, 0))
+            entry = Entry(self.add_client_window)
+            entry.grid(row=i, column=1, pady=5)
+            entries.append(entry)
+
+        add_button = Button(self.add_client_window, text="Add Client",
+                            command=lambda: self.add_client_to_company(entries))
+        add_button.grid(row=len(labels), columnspan=2, pady=10, padx=(20, 0))
+
+    def add_client_to_company(self, entries):
+        client_id = entries[0].get()
+        name = entries[1].get()
+        address = entries[2].get()
+        contact_details = entries[3].get()
+        budget = entries[4].get()
+
+        new_client = Client(client_id, name, address, contact_details, budget)
+        self.company.add_client(new_client)
+        self.add_client_window.destroy()
+
+    def delete_client(self):
+        self.delete_client_window = Tk()
+        self.delete_client_window.title("Delete Client")
+        self.delete_client_window.geometry("300x100")
+        label = Label(self.delete_client_window, text="Enter Client ID to delete:")
+        label.pack()
+        entry = Entry(self.delete_client_window)
+        entry.pack()
+        delete_button = Button(self.delete_client_window, text="Delete",
+                               command=lambda: self.delete_client_from_company(entry.get()))
+        delete_button.pack()
+
+    def delete_client_from_company(self, client_id):
+        self.company.delete_client(client_id)
+        self.delete_client_window.destroy()
+
+    def modify_client(self):
+        self.modify_client_window = Tk()
+        self.modify_client_window.title("Modify Client")
+        self.modify_client_window.geometry("400x400")
+
+        labels = ['Client ID:', 'New Name', 'New Address:', 'New Contact Details:', 'New Budget:']
+        entries = []
+        for i, label_text in enumerate(labels):
+            label = Label(self.modify_client_window, text=label_text)
+            label.grid(row=i, column=0, pady=5, padx=(70, 0))
+            entry = Entry(self.modify_client_window)
+            entry.grid(row=i, column=1, pady=5)
+            entries.append(entry)
+
+        modify_button = Button(self.modify_client_window, text="Modify Client",
+                               command=lambda: self.modify_client_in_company(entries))
+        modify_button.grid(row=len(labels), columnspan=2, pady=10, padx=(20, 0))
+
+    def modify_client_in_company(self, entries):
+        client_id = entries[0].get()
+        new_name = entries[1].get()
+        new_address = entries[2].get()
+        new_contact_details = entries[3].get()
+        new_budget = entries[4].get()
+
+        if client_id in self.company.clients:
+            client = self.company.clients[client_id]
+            if new_name:
+                client.name = new_name
+            if new_address:
+                client.company = new_address
+            if new_contact_details:
+                client.contact_details = new_contact_details
+            if new_budget:
+                client.budget = new_budget
+            if new_address:
+                client.address = new_address
+
+            self.company.clients[client_id] = client
+            messagebox.showinfo("Client Modified", f"Client with ID {client_id} modified successfully.")
+            self.modify_client_window.destroy()
+        else:
+            messagebox.showerror("Error", f"Client with ID {client_id} not found.")
+
+    def display_all_clients(self):
+        clients_info = "\n".join([client.display() for client in self.company.clients.values()])
+        messagebox.showinfo("All Clients", clients_info)
+
+    def display_client_by_id(self):
+        self.display_client_by_id_window = Tk()
+        self.display_client_by_id_window.title("Display Client by ID")
+        self.display_client_by_id_window.geometry("300x100")
+
+        label = Label(self.display_client_by_id_window, text="Enter Client ID:")
+        label.pack(pady=10)
+        entry = Entry(self.display_client_by_id_window)
+        entry.pack(pady=5)
+
+        display_button = Button(self.display_client_by_id_window, text="Display Client",
+                                command=lambda: self.display_client_by_id_from_company(entry.get()))
+        display_button.pack(pady=10)
+        self.displayed_client_label = Label(self.display_client_by_id_window, text="")
+        self.displayed_client_label.pack(pady=10)
+
+    def display_client_by_id_from_company(self, client_id):
+        if client_id in self.company.clients:
+            client = self.company.clients[client_id]
+            messagebox.showinfo("Client Details", client.display())
+        else:
+            messagebox.showerror("Error", f"Client with ID {client_id} not found.")
+
+    #Guest
+    def add_guest(self):
+        self.add_guest_window = Tk()
+        self.add_guest_window.title("Add Guest")
+        self.add_guest_window.geometry("400x400")
+
+        labels = ['Guest ID:', 'Name:', 'Address:', 'Contact Details:']
+        entries = []
+        for i, label_text in enumerate(labels):
+            label = Label(self.add_guest_window, text=label_text)
+            label.grid(row=i, column=0, pady=5, padx=(70, 0))
+            entry = Entry(self.add_guest_window)
+            entry.grid(row=i, column=1, pady=5)
+            entries.append(entry)
+
+        add_button = Button(self.add_guest_window, text="Add Guest", command=lambda: self.add_guest_to_company(entries))
+        add_button.grid(row=len(labels), columnspan=2, pady=10, padx=(20, 0))
+
+    def add_guest_to_company(self, entries):
+        guest_id = entries[0].get()
+        name = entries[1].get()
+        address = entries[2].get()
+        contact_details = entries[3].get()
+
+        new_guest = Guest(guest_id, name, address, contact_details)
+        self.company.add_guest(new_guest)
+        self.add_guest_window.destroy()
+
+    def delete_guest(self):
+        self.delete_guest_window = Tk()
+        self.delete_guest_window.title("Delete Guest")
+        self.delete_guest_window.geometry("300x100")
+        label = Label(self.delete_guest_window, text="Enter Guest ID to delete:")
+        label.pack()
+        entry = Entry(self.delete_guest_window)
+        entry.pack()
+        delete_button = Button(self.delete_guest_window, text="Delete",
+                               command=lambda: self.delete_guest_from_company(entry.get()))
+        delete_button.pack()
+
+    def delete_guest_from_company(self, guest_id):
+        self.company.delete_guest(guest_id)
+        self.delete_guest_window.destroy()
+
+    def modify_guest(self):
+        self.modify_guest_window = Tk()
+        self.modify_guest_window.title("Modify Guest")
+        self.modify_guest_window.geometry("400x400")
+
+        labels = ['Guest ID:', 'Name:', 'Address:', 'Contact Details:']
+        entries = []
+        for i, label_text in enumerate(labels):
+            label = Label(self.modify_guest_window, text=label_text)
+            label.grid(row=i, column=0, pady=5, padx=(70, 0))
+            entry = Entry(self.modify_guest_window)
+            entry.grid(row=i, column=1, pady=5)
+            entries.append(entry)
+
+        modify_button = Button(self.modify_guest_window, text="Modify Guest",
+                               command=lambda: self.modify_guest_in_company(entries))
+        modify_button.grid(row=len(labels), columnspan=2, pady=10, padx=(20, 0))
+
+    def modify_guest_in_company(self, entries):
+        guest_id = entries[0].get()
+        new_name = entries[1].get()
+        new_address = entries[2].get()
+        new_contact_details = entries[3].get()
+
+        if guest_id in self.company.guests:
+            guest = self.company.guests[guest_id]
+            if new_name:
+                guest.name = new_name
+            if new_address:
+                guest.address = new_address
+            if new_contact_details:
+                guest.contact_details = new_contact_details
+
+            self.company.guests[guest_id] = guest
+            messagebox.showinfo("Guest Modified", f"Guest with ID {guest_id} modified successfully.")
+            self.modify_guest_window.destroy()
+        else:
+            messagebox.showerror("Error", f"Guest with ID {guest_id} not found.")
+
+    def display_all_guests(self):
+        messagebox.showinfo("All Guests", "\n".join(self.company.display_all_guests()))
+
+    def display_guest_by_id(self):
+        self.display_guest_by_id_window = Tk()
+        self.display_guest_by_id_window.title("Display Guest by ID")
+        self.display_guest_by_id_window.geometry("400x400")
+
+        label = Label(self.display_guest_by_id_window, text="Enter Guest ID:")
+        label.pack(pady=10)
+        entry = Entry(self.display_guest_by_id_window)
+        entry.pack(pady=5)
+
+        display_button = Button(self.display_guest_by_id_window, text="Display Guest",
+                                command=lambda: self.display_guest_by_id_from_company(entry.get()))
+        display_button.pack(pady=10)
+        self.displayed_guest_label = Label(self.display_guest_by_id_window, text="")
+        self.displayed_guest_label.pack(pady=10)
+
+    def display_guest_by_id_from_company(self, guest_id):
+        if guest_id in self.company.guests:
+            guest = self.company.guests[guest_id]
+            messagebox.showinfo("Guest Details", guest.display())
+        else:
+            messagebox.showerror("Error", f"Guest with ID {guest_id} not found.")
