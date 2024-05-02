@@ -848,3 +848,164 @@ class EventManagementGUI:
             messagebox.showinfo("Venue Details", venue.display())
         else:
             messagebox.showerror("Error", f"Venue with ID {venue_id} not found.")
+
+    #Event
+    def add_event(self):
+        self.add_event_window = Tk()
+        self.add_event_window.title("Add Event")
+        self.add_event_window.geometry("400x400")
+
+        labels = ['Event ID:', 'Event Type:', 'Theme:', 'Date:', 'Time:', 'Duration:', 'Venue Address:', 'Client ID:',
+                  'Guest List:', 'Catering Company:', 'Cleaning Company:', 'Decorations Company:',
+                  'Entertainment Company:',
+                  'Furniture Supply Company:', 'Invoice:']
+        entries = []
+        for i, label_text in enumerate(labels):
+            label = Label(self.add_event_window, text=label_text)
+            label.grid(row=i, column=0, pady=5, padx=(70, 0))
+            entry = Entry(self.add_event_window)
+            entry.grid(row=i, column=1, pady=5)
+            entries.append(entry)
+
+        add_button = Button(self.add_event_window, text="Add Event", command=lambda: self.add_event_to_company(entries))
+        add_button.grid(row=len(labels), columnspan=2, pady=10, padx=(20, 0))
+
+    def add_event_to_company(self, entries):
+        event_id = entries[0].get()
+        event_type = entries[1].get()
+        theme = entries[2].get()
+        date = entries[3].get()
+        time = entries[4].get()
+        duration = entries[5].get()
+        venue_address = entries[6].get()
+        client_id = entries[7].get()
+        guest_list = entries[8].get().split(',') if entries[8].get() else []
+        catering_company = entries[9].get()
+        cleaning_company = entries[10].get()
+        decorations_company = entries[11].get()
+        entertainment_company = entries[12].get()
+        furniture_supply_company = entries[13].get()
+        invoice = entries[14].get()
+
+        new_event = Event(event_id, event_type, theme, date, time, duration, venue_address, client_id, guest_list,
+                          catering_company, cleaning_company, decorations_company, entertainment_company,
+                          furniture_supply_company, invoice)
+        self.company.add_event(new_event)
+        self.add_event_window.destroy()
+
+    def delete_event(self):
+        self.delete_event_window = Tk()
+        self.delete_event_window.title("Delete Event")
+        self.delete_event_window.geometry("300x100")
+        label = Label(self.delete_event_window, text="Enter Event ID to delete:")
+        label.pack()
+        entry = Entry(self.delete_event_window)
+        entry.pack()
+        delete_button = Button(self.delete_event_window, text="Delete",
+                               command=lambda: self.delete_event_from_company(entry.get()))
+        delete_button.pack()
+
+    def delete_event_from_company(self, event_id):
+        self.company.delete_event(event_id)
+        self.delete_event_window.destroy()
+
+    def modify_event(self):
+        self.modify_event_window = Tk()
+        self.modify_event_window.title("Modify Event")
+        self.modify_event_window.geometry("400x400")
+
+        labels = ['Event ID:', 'Event Type:', 'Theme:', 'Date:', 'Time:', 'Duration:', 'Venue Address:', 'Client ID:',
+                  'Guest List:', 'Catering Company:', 'Cleaning Company:', 'Decorations Company:',
+                  'Entertainment Company:',
+                  'Furniture Supply Company:', 'Invoice:']
+        entries = []
+        for i, label_text in enumerate(labels):
+            label = Label(self.modify_event_window, text=label_text)
+            label.grid(row=i, column=0, pady=5, padx=(70, 0))
+            entry = Entry(self.modify_event_window)
+            entry.grid(row=i, column=1, pady=5)
+            entries.append(entry)
+
+        modify_button = Button(self.modify_event_window, text="Modify Event",
+                               command=lambda: self.modify_event_in_company(entries))
+        modify_button.grid(row=len(labels), columnspan=2, pady=10, padx=(20, 0))
+
+    def modify_event_in_company(self, entries):
+        event_id = entries[0].get()
+        new_event_type = entries[1].get()
+        new_theme = entries[2].get()
+        new_date = entries[3].get()
+        new_time = entries[4].get()
+        new_duration = entries[5].get()
+        new_venue_address = entries[6].get()
+        new_client_id = entries[7].get()
+        new_guest_list = entries[8].get().split(',') if entries[8].get() else []
+        new_catering_company = entries[9].get()
+        new_cleaning_company = entries[10].get()
+        new_decorations_company = entries[11].get()
+        new_entertainment_company = entries[12].get()
+        new_furniture_supply_company = entries[13].get()
+        new_invoice = entries[14].get()
+
+        if event_id in self.company.events:
+            event = self.company.events[event_id]
+            if new_event_type:
+                event.event_type = new_event_type
+            if new_theme:
+                event.theme = new_theme
+            if new_date:
+                event.date = new_date
+            if new_time:
+                event.time = new_time
+            if new_duration:
+                event.duration = new_duration
+            if new_venue_address:
+                event.venue_address = new_venue_address
+            if new_client_id:
+                event.client_id = new_client_id
+            if new_guest_list:
+                event.guest_list = new_guest_list
+            if new_catering_company:
+                event.catering_company = new_catering_company
+            if new_cleaning_company:
+                event.cleaning_company = new_cleaning_company
+            if new_decorations_company:
+                event.decorations_company = new_decorations_company
+            if new_entertainment_company:
+                event.entertainment_company = new_entertainment_company
+            if new_furniture_supply_company:
+                event.furniture_supply_company = new_furniture_supply_company
+            if new_invoice:
+                event.invoice = new_invoice
+
+            self.company.events[event_id] = event
+            messagebox.showinfo("Event Modified", f"Event with ID {event_id} modified successfully.")
+            self.modify_event_window.destroy()
+        else:
+            messagebox.showerror("Error", f"Event with ID {event_id} not found.")
+
+    def display_all_events(self):
+        messagebox.showinfo("All Events", "\n".join(self.company.display_all_events()))
+
+    def display_event_by_id(self):
+        self.display_event_by_id_window = Tk()
+        self.display_event_by_id_window.title("Display Event by ID")
+        self.display_event_by_id_window.geometry("400x400")
+
+        label = Label(self.display_event_by_id_window, text="Enter Event ID:")
+        label.pack(pady=10)
+        entry = Entry(self.display_event_by_id_window)
+        entry.pack(pady=5)
+
+        display_button = Button(self.display_event_by_id_window, text="Display Event",
+                                command=lambda: self.display_event_by_id_from_company(entry.get()))
+        display_button.pack(pady=10)
+        self.displayed_event_label = Label(self.display_event_by_id_window, text="")
+        self.displayed_event_label.pack(pady=10)
+
+    def display_event_by_id_from_company(self, event_id):
+        if event_id in self.company.events:
+            event = self.company.events[event_id]
+            messagebox.showinfo("Event Details", event.display())
+        else:
+            messagebox.showerror("Error", f"Event with ID {event_id} not found.")
