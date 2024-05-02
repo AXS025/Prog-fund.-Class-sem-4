@@ -1,17 +1,23 @@
-class Employee:
-    def __init__(self, name, employee_id, department, job_title, basic_salary, age, date_of_birtth, passport_details):
+class Person:
+    def __init__(self, name, age, date_of_birth):
         self.name = name
+        self.age = age
+        self.date_of_birth = date_of_birth
+
+    def display(self):
+        return f"Name: {self.name}\nAge: {self.age}\nDate of Birth: {self.date_of_birth}\n"
+
+class Employee(Person):
+    def __init__(self, name, employee_id, department, job_title, basic_salary, age, date_of_birth, passport_details):
+        super().__init__(name, age, date_of_birth)
         self.employee_id = employee_id
         self.department = department
         self.job_title = job_title
         self.basic_salary = basic_salary
-        self.age = age
-        self.date_of_birth = date_of_birtth
         self.passport_details = passport_details
 
     def display(self):
-        return f"Employee Name: {self.name}\nEmployee ID: {self.employee_id}\nDepartment: {self.department}\nJob Title: {self.job_title}\nSalary: {self.basic_salary}\nAge: {self.age}\nDOB: {self.date_of_birth}\nPassport: {self.passport_details}\n"
-
+        return f"Employee ID: {self.employee_id}\nDepartment: {self.department}\nJob Title: {self.job_title}\nSalary: {self.basic_salary}\n" + super().display()
 
 class Client:
     def __init__(self, client_id, name, address, contact_details, budget):
@@ -23,10 +29,11 @@ class Client:
 
     def get_id(self):
         return self.client_id
-    
+
     def display(self):
         return f"Client ID: {self.client_id}\nName: {self.name}\nAddress: {self.address}\nContact Details: {self.contact_details}\nBudget: {self.budget}\n"
-    
+
+
 class Guest:
     def __init__(self, guest_id, name, address, contact_details):
         self.guest_id = guest_id
@@ -34,4 +41,65 @@ class Guest:
         self.address = address
         self.contact_details = contact_details
 
-#add the rest of the classes
+    def get_id(self):
+        return self.guest_id
+
+    def display(self):
+        return f"Guest ID: {self.guest_id}\nName: {self.name}\nAddress: {self.address}\nContact Details: {self.contact_details}\n"
+
+class Venue:
+    def __init__(self, venue_id, name, address, contact, minimum_number_of_guests, maximum_number_of_guests):
+        self.venue_id = venue_id
+        self.name = name
+        self.address = address
+        self.contact = contact
+        self.minimum_number_of_guests = minimum_number_of_guests
+        self.maximum_number_of_guests = maximum_number_of_guests
+
+    def get_address(self):
+        return self.address
+
+    def display(self):
+        return f"Venue ID: {self.venue_id}\nName: {self.name}\nAddress: {self.address}\nContact: {self.contact}\nMin Guests: {self.minimum_number_of_guests}\nMax Guests: {self.maximum_number_of_guests}\n"
+
+
+class Supplier:
+    def __init__(self, id, name, address, contact_details, service_menu, minimum_number_of_guests,
+                 maximum_number_of_guests):
+        self.id = id
+        self.name = name
+        self.address = address
+        self.contact_details = contact_details
+        self.service_menu = service_menu
+        self.minimum_number_of_guests = minimum_number_of_guests
+        self.maximum_number_of_guests = maximum_number_of_guests
+
+    def get_id(self):
+        return self.id
+
+    def display(self):
+        return f"Supplier ID: {self.id}\nName: {self.name}\nAddress: {self.address}\nContact Details: {self.contact_details}\nService Menu: {self.service_menu}\nMin Guests: {self.minimum_number_of_guests}\nMax Guests: {self.maximum_number_of_guests}\n"
+
+
+class Event:
+    def __init__(self, event_id, event_type, theme, date, time, duration, venue_address, client_id, guest_list,
+                 catering_company,
+                 cleaning_company, decorations_company, entertainment_company, furniture_supply_company, invoice):
+        self.event_id = event_id
+        self.event_type = event_type
+        self.theme = theme
+        self.date = date
+        self.time = time
+        self.duration = duration
+        self.venue_address = venue_address
+        self.client_id = client_id
+        self.guest_list = guest_list if guest_list is not None else []  # IDs of guests
+        self.catering_company = catering_company
+        self.cleaning_company = cleaning_company
+        self.decorations_company = decorations_company
+        self.entertainment_company = entertainment_company
+        self.furniture_supply_company = furniture_supply_company
+        self.invoice = invoice
+
+    def display(self):
+        return f"Event ID: {self.event_id}\nType: {self.event_type}\nTheme: {self.theme}\nDate: {self.date}\nTime: {self.time}\nDuration: {self.duration}\nVenue: {self.venue_address}\nClient ID: {self.client_id}\nGuest List: {self.guest_list}\nCatering: {self.catering_company}\nCleaning: {self.cleaning_company}\nDecorations: {self.decorations_company}\nEntertainment: {self.entertainment_company}\nFurniture: {self.furniture_supply_company}\nInvoice: {self.invoice}\n"
