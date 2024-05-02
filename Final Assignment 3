@@ -1009,3 +1009,127 @@ class EventManagementGUI:
             messagebox.showinfo("Event Details", event.display())
         else:
             messagebox.showerror("Error", f"Event with ID {event_id} not found.")
+
+    #Supplier
+    def add_supplier(self):
+        self.add_supplier_window = Tk()
+        self.add_supplier_window.title("Add Supplier")
+        self.add_supplier_window.geometry("400x400")
+
+        labels = ['Supplier ID:', 'Supplier Name:', 'Address:', 'Contact Details:', 'Service Menu:', 'Min Guests:',
+                  'Max Guests:']
+        entries = []
+        for i, label_text in enumerate(labels):
+            label = Label(self.add_supplier_window, text=label_text)
+            label.grid(row=i, column=0, pady=5, padx=(70, 0))
+            entry = Entry(self.add_supplier_window)
+            entry.grid(row=i, column=1, pady=5)
+            entries.append(entry)
+
+        add_button = Button(self.add_supplier_window, text="Add Supplier",
+                            command=lambda: self.add_supplier_to_company(entries))
+        add_button.grid(row=len(labels), columnspan=2, pady=10, padx=(20, 0))
+
+    def add_supplier_to_company(self, entries):
+        supplier_id = entries[0].get()
+        supplier_name = entries[1].get()
+        address = entries[2].get()
+        contact = entries[3].get()
+        menu = entries[4].get()
+        min_guests = entries[5].get()
+        max_guests = entries[6].get()
+
+        new_supplier = Supplier(supplier_id, supplier_name, address, contact, menu, min_guests, max_guests)
+        self.company.add_supplier(new_supplier)
+        self.add_supplier_window.destroy()
+
+    def delete_supplier(self):
+        self.delete_supplier_window = Tk()
+        self.delete_supplier_window.title("Delete Supplier")
+        self.delete_supplier_window.geometry("300x100")
+        label = Label(self.delete_supplier_window, text="Enter Supplier ID to delete:")
+        label.pack()
+        entry = Entry(self.delete_supplier_window)
+        entry.pack()
+        delete_button = Button(self.delete_supplier_window, text="Delete",
+                               command=lambda: self.delete_supplier_from_company(entry.get()))
+        delete_button.pack()
+
+    def delete_supplier_from_company(self, supplier_id):
+        self.company.delete_supplier(supplier_id)
+        self.delete_supplier_window.destroy()
+
+    def modify_supplier(self):
+        self.modify_supplier_window = Tk()
+        self.modify_supplier_window.title("Modify Supplier")
+        self.modify_supplier_window.geometry("400x400")
+
+        labels = ['Supplier ID:', 'Supplier Name:', 'Address:', 'Contact Details:', 'Service Menu:', 'Min Guests:',
+                  'Max Guests:']
+        entries = []
+        for i, label_text in enumerate(labels):
+            label = Label(self.modify_supplier_window, text=label_text)
+            label.grid(row=i, column=0, pady=5, padx=(70, 0))
+            entry = Entry(self.modify_supplier_window)
+            entry.grid(row=i, column=1, pady=5)
+            entries.append(entry)
+
+        modify_button = Button(self.modify_supplier_window, text="Modify Supplier",
+                               command=lambda: self.modify_supplier_in_company(entries))
+        modify_button.grid(row=len(labels), columnspan=2, pady=10, padx=(20, 0))
+
+    def modify_supplier_in_company(self, entries):
+        supplier_id = entries[0].get()
+        new_supplier_name = entries[1].get()
+        new_address = entries[2].get()
+        new_contact = entries[3].get()
+        new_menu = entries[4].get()
+        new_min_guests = entries[5].get()
+        new_max_guests = entries[6].get()
+
+        if supplier_id in self.company.suppliers:
+            supplier = self.company.suppliers[supplier_id]
+            if supplier_id:
+                supplier.id = supplier_id
+            if new_supplier_name:
+                supplier.name = new_supplier_name
+            if new_address:
+                supplier.address = new_address
+            if new_contact:
+                supplier.contact_details = new_contact
+            if new_min_guests:
+                supplier.minimum_number_of_guests = new_min_guests
+            if new_max_guests:
+                supplier.maximum_number_of_guests = new_max_guests
+
+            self.company.suppliers[supplier_id] = supplier
+            messagebox.showinfo("Supplier Modified", f"Supplier with ID {supplier_id} modified successfully.")
+            self.modify_supplier_window.destroy()
+        else:
+            messagebox.showerror("Error", f"Supplier with ID {supplier_id} not found.")
+
+    def display_all_suppliers(self):
+        messagebox.showinfo("All Suppliers", "\n".join(self.company.display_all_suppliers()))
+
+    def display_supplier_by_id(self):
+        self.display_supplier_by_id_window = Tk()
+        self.display_supplier_by_id_window.title("Display Supplier by ID")
+        self.display_supplier_by_id_window.geometry("400x400")
+
+        label = Label(self.display_supplier_by_id_window, text="Enter Supplier ID:")
+        label.pack(pady=10)
+        entry = Entry(self.display_supplier_by_id_window)
+        entry.pack(pady=5)
+
+        display_button = Button(self.display_supplier_by_id_window, text="Display Supplier",
+                                command=lambda: self.display_supplier_by_id_from_company(entry.get()))
+        display_button.pack(pady=10)
+        self.displayed_supplier_label = Label(self.display_supplier_by_id_window, text="")
+        self.displayed_supplier_label.pack(pady=10)
+
+    def display_supplier_by_id_from_company(self, supplier_id):
+        if supplier_id in self.company.suppliers:
+            supplier = self.company.suppliers[supplier_id]
+            messagebox.showinfo("Supplier Details", supplier.display())
+        else:
+            messagebox.showerror("Error", f"Supplier with ID {supplier_id} not found.")
