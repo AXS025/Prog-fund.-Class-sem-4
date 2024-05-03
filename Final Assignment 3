@@ -1,42 +1,42 @@
-import pickle
-from tkinter import *
-from tkinter import messagebox, Tk, Label, Entry, Button
+import pickle #imports Pickle library
+from tkinter import * #imports tkinter
+from tkinter import messagebox, Tk, Label, Entry, Button  #imports tkinter
 
-class Person:
-    def __init__(self, name, age, date_of_birth):
+class Person: #Parent class
+    def __init__(self, name, age, date_of_birth): #constructor to iitializize attributes for Person class
+        self.name = name #attribute
+        self.age = age #attribute
+        self.date_of_birth = date_of_birth #attribute
+
+    def set_name(self, name): #Setter to set name attribute
         self.name = name
-        self.age = age
-        self.date_of_birth = date_of_birth
 
-    def set_name(self, name):
-        self.name = name
-
-    def get_name(self):
+    def get_name(self):  #Getter to get name attribute
         return self.name
 
-    def display(self):
+    def display(self): #method to display person's information
         return f"Name: {self.name}\nAge: {self.age}\nDate of Birth: {self.date_of_birth}\n"
 
-class Employee(Person):
-    def __init__(self, name, employee_id, department, job_title, basic_salary, age, date_of_birth, passport_details):
-        super().__init__(name, age, date_of_birth)
+class Employee(Person): #Employee class (child class to Person class)
+    def __init__(self, name, employee_id, department, job_title, basic_salary, age, date_of_birth, passport_details): #constructor
+        super().__init__(name, age, date_of_birth) #super function to call attributes from the parent class
         self.employee_id = employee_id
         self.department = department
         self.job_title = job_title
         self.basic_salary = basic_salary
         self.passport_details = passport_details
 
-    def set_employee_id(self, employee_id):
+    def set_employee_id(self, employee_id): #setter
         self.employee_id = employee_id
 
-    def get_employee_id(self):
+    def get_employee_id(self): #getter
         return self.employee_id
 
     def display(self):
         return f"Employee ID: {self.employee_id}\nDepartment: {self.department}\nJob Title: {self.job_title}\nSalary: {self.basic_salary}\n" + super().display()
 
-class Client:
-    def __init__(self, client_id, name, address, contact_details, budget):
+class Client: #Client class
+    def __init__(self, client_id, name, address, contact_details, budget): #constructor
         self.client_id = client_id
         self.name = name
         self.address = address
@@ -44,17 +44,17 @@ class Client:
         self.budget = budget
 
 
-    def set_client_id(self, client_id):
+    def set_client_id(self, client_id): #setter
         self.client_id = client_id
 
-    def get_client_id(self):
+    def get_client_id(self): #getter
         return self.client_id
 
     def display(self):
         return f"Client ID: {self.client_id}\nName: {self.name}\nAddress: {self.address}\nContact Details: {self.contact_details}\nBudget: {self.budget}\n"
 
 
-class Guest:
+class Guest: #Guest class
     def __init__(self, guest_id, name, address, contact_details):
         self.guest_id = guest_id
         self.name = name
@@ -62,16 +62,16 @@ class Guest:
         self.contact_details = contact_details
 
 
-    def set_guest_id(self, guest_id):
+    def set_guest_id(self, guest_id): #setter
         self.guest_id = guest_id
 
-    def get_guest_id(self):
+    def get_guest_id(self): #getter
         return self.guest_id
 
-    def display(self):
+    def display(self): #displays guest's information
         return f"Guest ID: {self.guest_id}\nName: {self.name}\nAddress: {self.address}\nContact Details: {self.contact_details}\n"
 
-class Venue:
+class Venue: #Venue class
     def __init__(self, venue_id, name, address, contact, minimum_number_of_guests, maximum_number_of_guests):
         self.venue_id = venue_id
         self.name = name
@@ -80,17 +80,17 @@ class Venue:
         self.minimum_number_of_guests = minimum_number_of_guests
         self.maximum_number_of_guests = maximum_number_of_guests
 
-    def set_address(self, address):
+    def set_address(self, address): #setter
         self.address = address
 
-    def get_address(self):
+    def get_address(self): #getter
         return self.address
 
-    def display(self):
+    def display(self): #displays venue's info
         return f"Venue ID: {self.venue_id}\nName: {self.name}\nAddress: {self.address}\nContact: {self.contact}\nMin Guests: {self.minimum_number_of_guests}\nMax Guests: {self.maximum_number_of_guests}\n"
 
 
-class Supplier:
+class Supplier: #Supplier class
     def __init__(self, id, name, address, contact_details, service_menu, minimum_number_of_guests,
                  maximum_number_of_guests):
         self.id = id
@@ -102,17 +102,17 @@ class Supplier:
         self.maximum_number_of_guests = maximum_number_of_guests
 
 
-    def set_id(self, id):
+    def set_id(self, id): #setter
         self.id = id
 
-    def get_id(self):
+    def get_id(self): #getter
         return self.id
 
-    def display(self):
+    def display(self): #displays supplier's info
         return f"Supplier ID: {self.id}\nName: {self.name}\nAddress: {self.address}\nContact Details: {self.contact_details}\nService Menu: {self.service_menu}\nMin Guests: {self.minimum_number_of_guests}\nMax Guests: {self.maximum_number_of_guests}\n"
 
 
-class Event:
+class Event: #Event class
     def __init__(self, event_id, event_type, theme, date, time, duration, venue, client_id, guest_list,
                  catering_company,
                  cleaning_company, decorations_company, entertainment_company, furniture_supply_company, invoice):
@@ -122,9 +122,9 @@ class Event:
         self.date = date
         self.time = time
         self.duration = duration
-        self.venue_address = venue #####
+        self.venue_address = venue #for composition
         self.client_id = client_id
-        self.guest_list = guest_list if guest_list is not None else []  # IDs of guests
+        self.guest_list = guest_list if guest_list is not None else []  # IDs of guests for aggregation
         self.catering_company = catering_company
         self.cleaning_company = cleaning_company
         self.decorations_company = decorations_company
@@ -133,44 +133,44 @@ class Event:
         self.invoice = invoice
 
 
-    def set_theme(self, theme):
+    def set_theme(self, theme): #setter
         self.theme = theme
 
-    def get_theme(self):
+    def get_theme(self): #getter
         return self.theme
 
-    def display(self):
+    def display(self): #displas event's infor
         return f"Event ID: {self.event_id}\nType: {self.event_type}\nTheme: {self.theme}\nDate: {self.date}\nTime: {self.time}\nDuration: {self.duration}\nVenue: {self.venue_address}\nClient ID: {self.client_id}\nGuest List: {self.guest_list}\nCatering: {self.catering_company}\nCleaning: {self.cleaning_company}\nDecorations: {self.decorations_company}\nEntertainment: {self.entertainment_company}\nFurniture: {self.furniture_supply_company}\nInvoice: {self.invoice}\n"
 
-class Company:
+class Company: #Company class
     def __init__(self):
-        self.employees = {}
-        self.events = {}
-        self.clients = {}
-        self.suppliers = {}
-        self.guests = {}
-        self.venues = {}
+        self.employees = {} #dictionary to store employees
+        self.events = {} #dictionary to store events
+        self.clients = {} #dictionary to store clients
+        self.suppliers = {} #dictionary to store suppliers
+        self.guests = {} #dictionary to store guests
+        self.venues = {} #dictionary to store venues
 
-    def add_employee(self, employee):
-        self.employees[employee.employee_id] = employee
+    def add_employee(self, employee): #method to add an employee to the company
+        self.employees[employee.employee_id] = employee #adding employee to the employees dictionary
 
-    def delete_employee(self, employee_id):
-        if employee_id in self.employees:
-            del self.employees[employee_id]
+    def delete_employee(self, employee_id):  #to delete an employee from the company
+        if employee_id in self.employees: #checking if employee exists
+            del self.employees[employee_id] #deletes the employee from the employees dictionary
 
-    def modify_employee(self, employee_id, new_employee):
-        if employee_id in self.employees:
-            self.employees[employee_id] = new_employee
+    def modify_employee(self, employee_id, new_employee): #to modify employee info
+        if employee_id in self.employees: #checks if the employee exists
+            self.employees[employee_id] = new_employee #updates the employee information
 
-    def display_all_employees(self):
-        return [employee.display() for employee in self.employees.values()]
+    def display_all_employees(self): #displays all employees' information
+        return [employee.display() for employee in self.employees.values()] #returns list of formatted strings of employees' info
 
-    def display_employee_by_id(self, employee_id):
-        if employee_id in self.employees:
-            return self.employees[employee_id].display()
+    def display_employee_by_id(self, employee_id): #displays employee information by ID
+        if employee_id in self.employees: #checks if the employee exists
+            return self.employees[employee_id].display() #returns string of employee's info
         else:
-            return "Employee not found."
-
+            return "Employee not found." #if not then it prints this
+#below are similar operations/methods for client, guests, suppliers, venues, and events:
     def add_client(self, client):
         self.clients[client.client_id] = client
 
@@ -272,34 +272,34 @@ class Company:
             return "Event not found."
 
 
-class EventManagementGUI:
+class EventManagementGUI: #EventManagementGUI class
     def __init__(self, master, company):
         self.master = master
         self.company = company
-        self.master.title("Event Management System")
-        self.master.geometry("800x400")  # Sets the size of the window
+        self.master.title("Event Management System") #title of the window
+        self.master.geometry("800x400")  #sets the size of the window
 
         #display
-        self.padding_frame_top = Frame(self.master, height=30)
+        self.padding_frame_top = Frame(self.master, height=30) #creates a padding frame at the top
         self.padding_frame_top.pack()
-
+        #employee frame
         self.employee_frame = Frame(self.master)
         self.employee_frame.pack(pady=10)
-        self.add_employee_button = Button(self.employee_frame, text="Add Employee", command=self.add_employee)
-        self.add_employee_button.pack(side=LEFT, padx=10)
-        self.delete_employee_button = Button(self.employee_frame, text="Delete Employee", command=self.delete_employee)
+        #buttons for employee management
+        self.add_employee_button = Button(self.employee_frame, text="Add Employee", command=self.add_employee) #button to add employee
+        self.add_employee_button.pack(side=LEFT, padx=10) #packing the add employee button
+        self.delete_employee_button = Button(self.employee_frame, text="Delete Employee", command=self.delete_employee) #to delete
         self.delete_employee_button.pack(side=LEFT, padx=10)
-        self.modify_employee_button = Button(self.employee_frame, text="Modify Employee", command=self.modify_employee)
+        self.modify_employee_button = Button(self.employee_frame, text="Modify Employee", command=self.modify_employee) #to modify
         self.modify_employee_button.pack(side=LEFT, padx=10)
-        self.display_all_employees_button = Button(self.employee_frame, text="Display All Employees",
-                                                   command=self.display_all_employees)
+        self.display_all_employees_button = Button(self.employee_frame, text="Display All Employees",command=self.display_all_employees) #to display all employees
         self.display_all_employees_button.pack(side=LEFT, padx=10)
-        self.display_employee_by_id_button = Button(self.employee_frame, text="Display Employee by ID",
-                                                    command=self.display_employee_by_id)
+        self.display_employee_by_id_button = Button(self.employee_frame, text="Display Employee by ID", command=self.display_employee_by_id) #to display employee by ID
         self.display_employee_by_id_button.pack(side=LEFT, padx=10)
-
+        #client frame
         self.client_frame = Frame(self.master)
         self.client_frame.pack(pady=10)
+        #buttons for client management (similar to the employee managment section)
         self.add_client_button = Button(self.client_frame, text="Add Client", command=self.add_client)
         self.add_client_button.pack(side=LEFT, padx=10)
         self.delete_client_button = Button(self.client_frame, text="Delete Client", command=self.delete_client)
@@ -312,9 +312,10 @@ class EventManagementGUI:
         self.display_client_by_id_button = Button(self.client_frame, text="Display Client by ID",
                                                   command=self.display_client_by_id)
         self.display_client_by_id_button.pack(side=LEFT, padx=10)
-
+        #guest frame
         self.guest_frame = Frame(self.master)
         self.guest_frame.pack(pady=10)
+        #buttons for guest management (similar to the employee managment section)
         self.add_guest_button = Button(self.guest_frame, text="Add Guest", command=self.add_guest)
         self.add_guest_button.pack(side=LEFT, padx=10)
         self.delete_guest_button = Button(self.guest_frame, text="Delete Guest", command=self.delete_guest)
@@ -327,9 +328,10 @@ class EventManagementGUI:
         self.display_guest_by_id_button = Button(self.guest_frame, text="Display Guest by ID",
                                                  command=self.display_guest_by_id)
         self.display_guest_by_id_button.pack(side=LEFT, padx=10)
-
+        #venue frame
         self.venue_frame = Frame(self.master)
         self.venue_frame.pack(pady=10)
+        #buttons for venue management (similar to the employee managment section)
         self.add_venue_button = Button(self.venue_frame, text="Add Venue", command=self.add_venue)
         self.add_venue_button.pack(side=LEFT, padx=10)
         self.delete_venue_button = Button(self.venue_frame, text="Delete Venue", command=self.delete_venue)
@@ -342,9 +344,10 @@ class EventManagementGUI:
         self.display_venue_by_id_button = Button(self.venue_frame, text="Display Venue by ID",
                                                  command=self.display_venue_by_id)
         self.display_venue_by_id_button.pack(side=LEFT, padx=10)
-
+        #supplier
         self.supplier_frame = Frame(self.master)
         self.supplier_frame.pack(pady=10)
+        #buttons for supplier management (similar to the employee managment section)
         self.add_supplier_button = Button(self.supplier_frame, text="Add Supplier", command=self.add_supplier)
         self.add_supplier_button.pack(side=LEFT, padx=10)
         self.delete_supplier_button = Button(self.supplier_frame, text="Delete Supplier", command=self.delete_supplier)
@@ -357,9 +360,10 @@ class EventManagementGUI:
         self.display_supplier_by_id_button = Button(self.supplier_frame, text="Display Supplier by ID",
                                                     command=self.display_supplier_by_id)
         self.display_supplier_by_id_button.pack(side=LEFT, padx=10)
-
+        #event frame
         self.event_frame = Frame(self.master)
         self.event_frame.pack(pady=10)
+        #buttons for event management (similar to the employee managment section)
         self.add_event_button = Button(self.event_frame, text="Add Event", command=self.add_event)
         self.add_event_button.pack(side=LEFT, padx=10)
         self.delete_event_button = Button(self.event_frame, text="Delete Event", command=self.delete_event)
@@ -373,66 +377,66 @@ class EventManagementGUI:
                                                  command=self.display_event_by_id)
         self.display_event_by_id_button.pack(side=LEFT, padx=10)
 
-    #employees
-    def add_employee(self):
-        # new window for adding an employee
-        self.add_employee_window = Tk()
-        self.add_employee_window.title("Add Employee")
-        self.add_employee_window.geometry("400x400")
+    #employees section
+    def add_employee(self): #method to add an employee
+        #new window for adding an employee
+        self.add_employee_window = Tk() #creates a new Tkinter window
+        self.add_employee_window.title("Add Employee") #setting title
+        self.add_employee_window.geometry("400x400") #setting size
 
         labels = ['Name:', 'Employee ID:', 'Department:', 'Job Title:', 'Basic Salary:', 'Age:', 'Date of Birth:',
-                  'Passport Details:']
-        entries = []
-        for i, label_text in enumerate(labels):
-            label = Label(self.add_employee_window, text=label_text)
-            label.grid(row=i, column=0, pady=5, padx=(70, 0))
-            entry = Entry(self.add_employee_window)
-            entry.grid(row=i, column=1, pady=5)
-            entries.append(entry)
+                  'Passport Details:'] #labels for employee info
+        entries = [] #empty list to store entry widgets
+        for i, label_text in enumerate(labels): #loops through labels
+            label = Label(self.add_employee_window, text=label_text) #creating label widgets
+            label.grid(row=i, column=0, pady=5, padx=(70, 0)) #placing label widgets in the window
+            entry = Entry(self.add_employee_window) #creating entry widgets
+            entry.grid(row=i, column=1, pady=5) #placing entry widgets in the window
+            entries.append(entry) #adding entry widgets to the list
 
         add_button = Button(self.add_employee_window, text="Add Employee",
-                            command=lambda: self.add_employee_to_company(entries))
-        add_button.grid(row=len(labels), columnspan=2, pady=10, padx=(20, 0))
+                            command=lambda: self.add_employee_to_company(entries)) #creating a button to add employee and command to preform when the button is clicked
+        add_button.grid(row=len(labels), columnspan=2, pady=10, padx=(20, 0)) #placing the button in the window
 
-    def add_employee_to_company(self, entries):
-        name = entries[0].get()
-        employee_id = entries[1].get()
-        department = entries[2].get()
-        job_title = entries[3].get()
-        basic_salary = entries[4].get()
-        age = entries[5].get()
-        date_of_birth = entries[6].get()
-        passport_details = entries[7].get()
+    def add_employee_to_company(self, entries): #method to add an employee to the company
+        name = entries[0].get() #getting name from the entry widget
+        employee_id = entries[1].get() #getting employee ID from the entry widget
+        department = entries[2].get() #getting department from the entry widget
+        job_title = entries[3].get() #getting job title from the entry widget
+        basic_salary = entries[4].get() #getting basic salary from the entry widget
+        age = entries[5].get() #getting age from the entry widget
+        date_of_birth = entries[6].get()  #getting date of birth from the entry widget
+        passport_details = entries[7].get()  #getting passport details from the entry widget
 
         new_employee = Employee(name, employee_id, department, job_title, basic_salary, age, date_of_birth,
                                 passport_details)
-        self.company.add_employee(new_employee)
-        self.add_employee_window.destroy()
+        self.company.add_employee(new_employee) #adding the new employee to the company
+        self.add_employee_window.destroy() #destroying the window after adding the employee
 
-    def delete_employee(self):
-        self.delete_employee_window = Tk()
-        self.delete_employee_window.title("Delete Employee")
-        self.delete_employee_window.geometry("300x100")
-        label = Label(self.delete_employee_window, text="Enter Employee ID to delete:")
+    def delete_employee(self): #method to delete an employee
+        self.delete_employee_window = Tk()  #creating a new window for deleting an employee
+        self.delete_employee_window.title("Delete Employee") #title
+        self.delete_employee_window.geometry("300x100") #size
+        label = Label(self.delete_employee_window, text="Enter Employee ID to delete:") #label widget
         label.pack()
-        entry = Entry(self.delete_employee_window)
+        entry = Entry(self.delete_employee_window) #entry widget
         entry.pack()
         delete_button = Button(self.delete_employee_window, text="Delete",
-                               command=lambda: self.delete_employee_from_company(entry.get()))
+                               command=lambda: self.delete_employee_from_company(entry.get())) #button to delete employee and command to make it happen when the button is clicked
         delete_button.pack()
 
-    def delete_employee_from_company(self, employee_id):
-        self.company.delete_employee(employee_id)
-        self.delete_employee_window.destroy()
+    def delete_employee_from_company(self, employee_id): #method to delete an employee from the company
+        self.company.delete_employee(employee_id) #deletes the employee from the company
+        self.delete_employee_window.destroy() #dstroyes the window after deleting the employee
 
-    def modify_employee(self):
-        self.modify_employee_window = Tk()
-        self.modify_employee_window.title("Modify Employee")
-        self.modify_employee_window.geometry("400x400")
+    def modify_employee(self): #method to modify employee details
+        self.modify_employee_window = Tk() #new window for modifying an employee
+        self.modify_employee_window.title("Modify Employee") #title
+        self.modify_employee_window.geometry("400x400") #size
 
         labels = ['Employee ID:', 'New Name:', 'New Department:', 'New Job Title:', 'New Basic Salary:', 'New Age:',
-                  'New Date of Birth:', 'New Passport Details:']
-        entries = []
+                  'New Date of Birth:', 'New Passport Details:'] #labels for new employee information
+        entries = [] #empty list to store entry widgets
         for i, label_text in enumerate(labels):
             label = Label(self.modify_employee_window, text=label_text)
             label.grid(row=i, column=0, pady=5, padx=(70, 0))
@@ -444,7 +448,7 @@ class EventManagementGUI:
                                command=lambda: self.modify_employee_in_company(entries))
         modify_button.grid(row=len(labels), columnspan=2, pady=10, padx=(20, 0))
 
-    def modify_employee_in_company(self, entries):
+    def modify_employee_in_company(self, entries): #method to modify employee details in the company
         employee_id = entries[0].get()
         new_name = entries[1].get()
         new_department = entries[2].get()
@@ -454,57 +458,57 @@ class EventManagementGUI:
         new_date_of_birth = entries[6].get()
         new_passport_details = entries[7].get()
 
-        if employee_id in self.company.employees:
-            employee = self.company.employees[employee_id]
-            if new_name:
-                employee.name = new_name
-            if new_department:
-                employee.department = new_department
-            if new_job_title:
-                employee.job_title = new_job_title
-            if new_basic_salary:
-                employee.basic_salary = new_basic_salary
-            if new_age:
-                employee.age = new_age
-            if new_date_of_birth:
-                employee.date_of_birth = new_date_of_birth
-            if new_passport_details:
-                employee.passport_details = new_passport_details
+        if employee_id in self.company.employees: #checking if employee id exists in the company's employees dictionary
+            employee = self.company.employees[employee_id] #getting the employee object
+            if new_name: #checking if new name is given
+                employee.name = new_name #updating employee's name
+            if new_department: #checking if new department is given
+                employee.department = new_department #updating employee's department
+            if new_job_title: #checking if new job title is given
+                employee.job_title = new_job_title #updating employee's job title
+            if new_basic_salary: #checking if new basic salary is given
+                employee.basic_salary = new_basic_salary #updating employee's basic salary
+            if new_age: #checking if new age is given
+                employee.age = new_age #updating employee's age
+            if new_date_of_birth: #checking if new date of birth is given
+                employee.date_of_birth = new_date_of_birth #updating date of birth
+            if new_passport_details: #checking if new passport details is given
+                employee.passport_details = new_passport_details #updating passport details
 
-            # update the employee in the company's dictionary
+            #updateing the employee in the company's dictionary
             self.company.employees[employee_id] = employee
             messagebox.showinfo("Employee Modified", f"Employee with ID {employee_id} modified successfully.")
             self.modify_employee_window.destroy()
         else:
             messagebox.showerror("Error", f"Employee with ID {employee_id} not found.")
 
-    def display_all_employees(self):
-        messagebox.showinfo("All Employees", "\n".join(self.company.display_all_employees()))
+    def display_all_employees(self): #method to display details of all employees
+        messagebox.showinfo("All Employees", "\n".join(self.company.display_all_employees())) #displaying info message with all employee details
 
-    def display_employee_by_id(self):
-        self.display_employee_by_id_window = Tk()
-        self.display_employee_by_id_window.title("Display Employee by ID")
-        self.display_employee_by_id_window.geometry("400x400")
+    def display_employee_by_id(self):  #method to display details of a specific employee by id
+        self.display_employee_by_id_window = Tk() #creates window
+        self.display_employee_by_id_window.title("Display Employee by ID") #title
+        self.display_employee_by_id_window.geometry("400x400") #size
 
-        label = Label(self.display_employee_by_id_window, text="Enter Employee ID:")
-        label.pack(pady=10)
-        entry = Entry(self.display_employee_by_id_window)
-        entry.pack(pady=5)
+        label = Label(self.display_employee_by_id_window, text="Enter Employee ID:") #creates label widget
+        label.pack(pady=10) #packing label widget
+        entry = Entry(self.display_employee_by_id_window) #creates entry widget
+        entry.pack(pady=5) #packing entry widget
 
         display_button = Button(self.display_employee_by_id_window, text="Display Employee",
-                                command=lambda: self.display_employee_by_id_from_company(entry.get()))
+                                command=lambda: self.display_employee_by_id_from_company(entry.get())) #creates diplay button and command to make happen when the button is clicked
         display_button.pack(pady=10)
-        self.displayed_employee_label = Label(self.display_employee_by_id_window, text="")
-        self.displayed_employee_label.pack(pady=10)
+        self.displayed_employee_label = Label(self.display_employee_by_id_window, text="") #creates label widget
+        self.displayed_employee_label.pack(pady=10) #packing label widget
 
-    def display_employee_by_id_from_company(self, employee_id):
-        if employee_id in self.company.employees:
-            employee = self.company.employees[employee_id]
-            messagebox.showinfo("Employee Details", employee.display())
+    def display_employee_by_id_from_company(self, employee_id): #method to display employee details by id from company
+        if employee_id in self.company.employees: #checkes if employee id is in the company's employees dictionary
+            employee = self.company.employees[employee_id] #getting the employee object
+            messagebox.showinfo("Employee Details", employee.display()) #displays employee details
         else:
-            messagebox.showerror("Error", f"Employee with ID {employee_id} not found.")
+            messagebox.showerror("Error", f"Employee with ID {employee_id} not found.") #if not it shows the error message
 
-    #client
+    #client section (similar methods to employee section)
     def add_client(self):
         self.add_client_window = Tk()
         self.add_client_window.title("Add Client")
@@ -621,7 +625,7 @@ class EventManagementGUI:
         else:
             messagebox.showerror("Error", f"Client with ID {client_id} not found.")
 
-    #Guest
+    #Guest section (similar methods to employee section)
     def add_guest(self):
         self.add_guest_window = Tk()
         self.add_guest_window.title("Add Guest")
@@ -730,7 +734,7 @@ class EventManagementGUI:
         else:
             messagebox.showerror("Error", f"Guest with ID {guest_id} not found.")
 
-    #Venue
+    #Venue section (similar methods to employee section)
     def add_venue(self):
         self.add_venue_window = Tk()
         self.add_venue_window.title("Add Venue")
@@ -1010,7 +1014,7 @@ class EventManagementGUI:
         else:
             messagebox.showerror("Error", f"Event with ID {event_id} not found.")
 
-    #Supplier
+    #Supplier section (similar methods to employee section)
     def add_supplier(self):
         self.add_supplier_window = Tk()
         self.add_supplier_window.title("Add Supplier")
@@ -1135,9 +1139,9 @@ class EventManagementGUI:
             messagebox.showerror("Error", f"Supplier with ID {supplier_id} not found.")
 
     #Pickle section
-    def save_data(self):
-        with open("employees.pkl", "wb") as file:
-            pickle.dump(self.company.employees, file)
+    def save_data(self): #method to save data to pickle files (binary files)
+        with open("employees.pkl", "wb") as file: #opening file to save data (wb is "write binary")
+            pickle.dump(self.company.employees, file) #dumping data into the file
         with open("clients.pkl", "wb") as file:
             pickle.dump(self.company.clients, file)
         with open("guests.pkl", "wb") as file:
@@ -1149,9 +1153,9 @@ class EventManagementGUI:
         with open("events.pkl", "wb") as file:
             pickle.dump(self.company.events, file)
 
-    def load_data(self):
-        with open("employees.pkl", "rb") as file:
-            self.company.employees = pickle.load(file)
+    def load_data(self): #method to load data from pickle files (binary files)
+        with open("employees.pkl", "rb") as file: #opening file to load data (rb is "read binary")
+            self.company.employees = pickle.load(file) #loading data from the file
         with open("clients.pkl", "rb") as file:
             self.company.clients = pickle.load(file)
         with open("guests.pkl", "rb") as file:
@@ -1164,7 +1168,7 @@ class EventManagementGUI:
             self.company.events = pickle.load(file)
 
 
-#main
+#main section
 company = Company()
 root = Tk()
 app = EventManagementGUI(root, company)
